@@ -25,7 +25,28 @@ class HomeController extends Controller
 
         // // Mengembalikan respons dari API Digiflazz
         // return response()->json($response);
-        return view('home.home');
+
+        $data = collect([
+            'ml' => [
+                'name' => 'MOBILE LEGENDS',
+                'img' => 'assets/img/ml.webp',
+            ],
+            'ffmax' => [
+                'name' => 'FREE FIRE MAX',
+                'img' => 'assets/img/ffmax.jpg',
+            ],
+            'ff' => [
+                'name' => 'FREE FIRE',
+                'img' => 'assets/img/ff.jpg',
+            ],
+            'gs' => [
+                'publisher' => '',
+                'name' => 'GARENA SHELL',
+                'img' => 'assets/img/garena-sheel.png',
+                'deskripsi' => 'Garena Shell adalah mata uang virtual yang bisa digunakan untuk membeli item dan layanan di platform game Garena dan game-game yang dioperasikan Garena. Garena Shell bisa digunakan untuk mengisi Diamond Free Fire, Voucher di Arena of Valor, atau RP di League of Legends.',
+            ],
+        ]);
+        return view('home.home', ['data' => $data]);
     }
 
     /**

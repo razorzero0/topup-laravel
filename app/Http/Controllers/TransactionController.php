@@ -75,13 +75,47 @@ class TransactionController extends Controller
             ]);
             return $hook;
         } else {
-            return false;
+            return $hook;
         }
 
         // Redirect atau response setelah sukses menyimpan
         // return redirect()->back()->with('success', 'Transaksi Berhasil Disimpan!');
     }
 
+    public function makeTransaction(Request $request)
+    {
+        // Validasi request
+
+        $validator = Validator::make($request->all(), [
+            'customer_no' => 'required|string',
+            'buyer_sku_code' => 'string',
+            'status' => 'string',
+            'buyer_last_saldo' => 'integer',
+            'sn' => 'string',
+            'price' => 'required|integer',
+        ]);
+
+        $hook = $this->digiflazzService->makeTransaction($request->customer_no, $this->ref_id, $request->buyer_sku_code);
+
+        if ($hook && $request->customer_no) {            // Simpan data ke tabel transactions
+            Transaction::create([
+                'ref_id' => $this->ref_id,
+                'kode_pengguna' => $this->user_id,
+                'customer_no' => $request->customer_no,
+                'buyer_sku_code' => $request->buyer_sku_code,
+                'status' => 'pending',
+                'buyer_last_saldo' => '0',
+                'sn' => 'topup',
+                'price' => $request->price,
+            ]);
+            return $hook;
+        } else {
+            return $hook;
+        }
+
+        // Redirect atau response setelah sukses menyimpan
+        // return redirect()->back()->with('success', 'Transaksi Berhasil Disimpan!');
+    }
 
     /**
      * Display the specified resource.

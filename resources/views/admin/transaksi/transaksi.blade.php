@@ -35,12 +35,12 @@
         <!-- Main Content-->
         <div class="p-8 bg-white border-2 rounded-lg ">
             <div class=" rounded ">
-                <div class="text-center text-gray-700">
+                <div class="text-center text-gray-600">
                     <h4 class="text-2xl font-bold">Data Transaksi</h4>
                 </div>
                 <hr class="h-px my-3 bg-gray-200 border-0">
                 @role('admin')
-                    <div class="mb-3 text-gray-600 flex justify-between  text-md font-semibold">
+                    <div class="mb-3 text-gray-500 flex justify-between  text-md font-semibold">
                         <span>SALDO</span>
                         <span>Rp. {{ number_format($saldo['data']['deposit']) }}</span>
 
@@ -118,43 +118,19 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($data as $d)
-                            <tr>
-                                <td class="font-medium text-gray-900 whitespace-nowrap">{{ $d['ref_id'] }}</td>
-                                <td>{{ $d->user->name }}</td>
-                                <td>Rp. {{ $d['price'] }}</td>
-                                <td>{{ $d['sn'] }}</td>
-                                <td>{{ $d['status'] }}</td>
-                                <td>{{ $d['created_at'] }}</td>
-                                {{-- <td class="">
-                                <button type="button"
-                                    class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                        <path fill-rule="evenodd"
-                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
-                                    </svg>
-                                    </svg>
-
-                                </button>
-                                <button type="button"
-                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300  shadow-red-500/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                                    </svg>
-                                    </svg>
-
-                                </button>
-
-                            </td> --}}
-                                </td>
-                            </tr>
+                            @if (Auth::user()->hasRole('admin') || $d['kode_pengguna'] == Auth::user()->id)
+                                <tr>
+                                    <td class="font-medium text-gray-900">{{ $d['ref_id'] }}</td>
+                                    <td>{{ $d->user->name }}</td>
+                                    <td>Rp. {{ $d['price'] }}</td>
+                                    <td>{{ $d['sn'] }}</td>
+                                    <td>{{ $d['status'] }}</td>
+                                    <td>{{ $d['created_at'] }}</td>
+                                </tr>
+                            @endif
                         @endforeach
-
 
 
                     </tbody>

@@ -24,7 +24,7 @@
                             <p class="text-base leading-4 text-gray-300 dark:text-white">Subtotal</p>
                             <p class="text-base leading-4 text-gray-300 subtotal dark:text-gray-300">0</p>
                         </div>
-                        <div class="flex items-center justify-between w-full ">
+                        <div class="flex items-center justify-between w-full flex-wrap ">
                             <p class="text-base leading-4 text-gray-300 dark:text-white">Discount
                                 <span
                                     class="p-1 text-xs font-medium leading-3 text-gray-300 bg-gray-600 discount-name dark:bg-white dark:text-gray-300">
@@ -34,7 +34,7 @@
                         </div>
                         <div class="flex items-center justify-between w-full">
                             <p class="text-base leading-4 text-gray-300 dark:text-white">Item</p>
-                            <p class="text-base leading-4 text-gray-300 item-name dark:text-gray-300">-</p>
+                            <p class="text-sm sm:text-base  leading-4 text-gray-300 item-name dark:text-gray-300">-</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between w-full">

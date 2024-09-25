@@ -2,7 +2,7 @@
 @section('content')
     @include('components.navbar.home-navbar')
     @include('product.partials.modal')
-    <section class="py-20 mt-10 bg-slate-900">
+    <section class="py-20 mt-4 sm:mt-6 bg-slate-900">
         <div class="max-w-6xl mx-8 md:mx-10 lg:mx-20 xl:mx-auto">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 lg:gap-8">
                 <ul class="space-y-8">
@@ -90,7 +90,7 @@
                 $('.discount-name').text(kupon);
             });
 
-            $('#cekKuponBtn').on('input', function() {
+            $('#idPlayer').on('input', function() {
                 customer_no = $(this).val();
             });
 
@@ -147,9 +147,7 @@
         <span class="sr-only">Loading...</span>
     </div>
 `);
-
                 e.preventDefault(); // Mencegah aksi default tombol
-
                 // Nonaktifkan tombol untuk mencegah klik ganda
                 $(this).prop('disabled', true);
                 // Lakukan AJAX request (sesuaikan URL dan data sesuai kebutuhan)
@@ -187,7 +185,6 @@
 
                             });
                             console.log(response)
-
                         }
                     },
                     error: function(xhr) {

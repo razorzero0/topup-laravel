@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +18,8 @@ Route::resource('/', HomeController::class);
 Route::resource('home', HomeController::class);
 Route::resource('transaction', TransactionController::class);
 Route::post('/cekDiskon', [CouponController::class, 'cekDiskon'])->name('cekDiskon');
+
+Route::post('/makeTransaction', [TransactionController::class, 'makeTransaction'])->name('makeTransaction');
 
 Route::get('/cek/{id}', [CekController::class, 'show'])->name('cek');
 

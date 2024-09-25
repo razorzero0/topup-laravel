@@ -1,4 +1,4 @@
-<li class="text-sm leading-6">
+<li class="text-sm leading-6" id="box-kupon">
     <div class="relative group">
         <div
             class="absolute transition rounded-lg opacity-25 -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur duration-400 group-hover:opacity-100 group-hover:duration-200">

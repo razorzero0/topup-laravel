@@ -6,6 +6,6 @@
     @apply bg-slate-100;
 }
 
-.product-card:hover > button {
-    /* @apply bg-slate-600 ; */
+* {
+    scroll-behavior: smooth;
 }
