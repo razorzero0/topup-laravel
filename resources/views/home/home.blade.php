@@ -29,7 +29,7 @@
         <div class="my-10 mb-20 text-center sm:mb-16">
             <h3 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-white md:text-3xl lg:text-4xl">
                 Popular <span
-                    class="underline underline-offset-3 decoration-8 decoration-red-500 dark:decoration-blue-600">Games</span>
+                    class="underline underline-offset-3 decoration-8 decoration-red-500 dark:decoration-blue-600">Items</span>
             </h3>
 
         </div>
@@ -58,6 +58,15 @@
                 <img class="absolute border shadow-md w-28 h-28 -top-12 rounded-3xl border-slate-600"
                     src="{{ asset('assets/img/ml.webp') }}" />
                 <h4 class="font-sans text-xl font-bold dark:text-white">Mobile Legends </h4>
+                <button type="button"
+                    class="absolute -skew-x-12 bottom-5 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium  text-sm px-5 py-2 text-center w-[70%]">Top
+                    Up</button>
+            </a>
+            <a href={{ route('item.show', 'gs') }}
+                class="relative flex flex-col items-center justify-center w-48 h-56 text-white bg-gray-800 border rounded-lg hover:shadow-lg hover:shadow-slate-700 border-slate-600 product-card">
+                <img class="absolute border shadow-md w-28 h-28 -top-12 rounded-3xl border-slate-600"
+                    src="{{ asset('assets/img/garena-sheel.png') }}" />
+                <h4 class="font-sans text-xl font-bold dark:text-white">Garena Shell </h4>
                 <button type="button"
                     class="absolute -skew-x-12 bottom-5 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium  text-sm px-5 py-2 text-center w-[70%]">Top
                     Up</button>

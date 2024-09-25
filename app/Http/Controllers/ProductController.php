@@ -79,18 +79,25 @@ class ProductController extends Controller
                     'name' => 'FREE FIRE',
                     'img' => 'assets/img/ff.jpg',
                     'deskripsi' => 'Free Fire atau FF adalah game battle royale gratis yang diterbitkan oleh Garena untuk Android dan iOS.',
-                ]
+                ],
+                'gs' => [
+                    'publisher' => '',
+                    'name' => 'GARENA SHELL',
+                    'img' => 'assets/img/garena-sheel.png',
+                    'deskripsi' => 'Garena Shell adalah mata uang virtual yang bisa digunakan untuk membeli item dan layanan di platform game Garena dan game-game yang dioperasikan Garena. Garena Shell bisa digunakan untuk mengisi Diamond Free Fire, Voucher di Arena of Valor, atau RP di League of Legends.',
+                ],
             ]);
 
             // Step 4: Memetakan brand berdasarkan id request
             $brandMapping = [
                 'ml' => 'MOBILE LEGENDS',
                 'ff' => 'FREE FIRE',
-                'ffmax' => 'FREE FIRE MAX'
+                'ffmax' => 'FREE FIRE MAX',
+                'gs' => 'GARENA',
             ];
 
             // Step 5: Filter data API berdasarkan brand sesuai ID yang direquest
-            $filteredProducts = collect($result['data'])->reverse()->filter(function ($product) use ($brandMapping, $id) {
+            $filteredProducts = collect($result['data'])->filter(function ($product) use ($brandMapping, $id) {
                 // Debug setiap produk untuk melihat struktur dan brand
                 return strtolower($product['brand']) === strtolower($brandMapping[$id]);
             });
