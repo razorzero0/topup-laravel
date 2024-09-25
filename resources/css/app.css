@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+    @apply bg-slate-100;
+}
+
+.product-card:hover > button {
+    /* @apply bg-slate-600 ; */
+}
