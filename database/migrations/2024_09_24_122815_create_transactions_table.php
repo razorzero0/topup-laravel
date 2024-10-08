@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('kode_pengguna')->unsigned()->nullable();
+            $table->bigInteger('kode_pengguna')->unsigned();
             $table->foreign('kode_pengguna')->references('id')->on('users')->onDelete('cascade');
-            $table->string('ref_id');
+            $table->string('invoice_id')->nullable();
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('set null');
             $table->string('customer_no');
             $table->string('buyer_sku_code');
-            $table->string('status');
-            $table->integer('buyer_last_saldo');
-            $table->string('sn');
+            $table->string('status')->default('Pending');
+            $table->integer('buyer_last_saldo')->nullable();
+            $table->string('sn')->nullable();
             $table->bigInteger('price')->unsigned();
             $table->timestamps();
         });

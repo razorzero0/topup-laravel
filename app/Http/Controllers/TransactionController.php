@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Services\DigiflazzService;
+use App\Services\MailtrapService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,14 +12,15 @@ use Illuminate\Support\Facades\Validator;
 class TransactionController extends Controller
 {
 
-    protected $digiflazzService, $ref_id, $user_id;
+    protected $digiflazzService, $ref_id, $user_id, $mailtrapService;
 
-    public function __construct(DigiflazzService $digiflazzService)
+    public function __construct(DigiflazzService $digiflazzService, MailtrapService $mailtrapService)
     {
 
         $this->user_id = Auth::id() ?? 1;
         $this->digiflazzService = $digiflazzService;
         $this->ref_id = uniqid('ref-');
+        $this->mailtrapService = $mailtrapService;
     }
 
     /**
@@ -73,9 +75,22 @@ class TransactionController extends Controller
                 'sn' => 'topup',
                 'price' => $request->price,
             ]);
+
+
+            $from = [
+                'email' => 'admin@algoora.biz.id',
+                'name' => 'Mailtrap Test'
+            ];
+
+            $to = ['muhainun059@gmail.com'];
+            $subject = 'You are awesome!';
+            $text = 'Congrats for sending test email with Mailtrap!';
+            $category = 'Integration Test';
+
+            $this->mailtrapService->sendEmail($from, $to, $subject, $text, $category);
             return $hook;
         } else {
-            return $hook;
+            return false;
         }
 
         // Redirect atau response setelah sukses menyimpan
@@ -147,5 +162,19 @@ class TransactionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    // public function cekTransaction()
+    // {
+
+    //     return view('riwayat-transaksi.cek-transaction');
+    // }
+
+    public function cekTransaction(Request $request)
+    {
+        $query = $request->query('query');
+        $stmt = Transaction::where('invoice_id', $query)->first();
+        return view('riwayat-transaksi.cek-transaction', ['data' => $stmt]);
     }
 }

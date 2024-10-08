@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
@@ -13,30 +14,42 @@ class CouponController extends Controller
     public function index()
     {
         $data = Coupon::all();
-        return view('admin.kupon.coupon', compact('data'));
+        $items = Item::all();
+        return view('admin.kupon.coupon', ['data' => $data, 'items' => $items]);
     }
 
     public function cekDiskon(Request $request)
     {
+        // Validasi input
+
         // Ambil kode kupon dari request
         $couponCode = $request->input('coupon_code');
         $gameCode = $request->input('game_code');
         $total = $request->input('total');
 
         // Cari kupon berdasarkan kode yang diberikan
-        $coupon = Coupon::where('name', $couponCode)->get()->first();
-
+        $coupon = Coupon::where('name', $couponCode)->first();
 
         // Jika kupon ditemukan dan stoknya lebih dari 0
-        if ($coupon && $coupon->stock > 0 && $gameCode == 'ff5' && $total > 0) {
+        if ($coupon && $coupon->stock > 0 && $gameCode == $coupon->item_id && $total > 0) {
+            // Hitung diskon
+            $discount = $total * $coupon->percent / 100;
+
             // Kurangi stok kupon sebanyak 1
-            $coupon->stock -= 1; // Atau bisa menggunakan $coupon->decrement('stock');
-            $coupon->save(); // Simpan perubahan ke database
-            return response()->json(true); // Kembalikan true
+            $coupon->decrement('stock');
+
+            // Hitung total harga setelah diskon
+            $priceAfterDiscount = $total - $discount;
+
+            // Return response JSON
+            return response()->json([
+                'diskon' => $coupon->percent,
+                'price' => $priceAfterDiscount,
+            ]);
         }
 
-        // Jika tidak ditemukan atau stok habis
-        return response()->json($coupon); // Kembalikan false
+        // Jika kupon tidak valid
+        return false;
     }
 
     /**
@@ -52,7 +65,23 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'item_id'  => 'required',
+            'name' => 'required',
+            'stock' => 'required|numeric',
+            'percent' => 'required|numeric|min:0|max:100',
+        ]);
+        // Simpan data ke tabel transactions
+        $stmt = Coupon::create([
+            'item_id' => $request->item_id,
+            'name' => $request->name,
+            'stock' => $request->stock,
+            'percent' => $request->percent,
+        ]);
+        if ($stmt) {
+            return back()->with('success', 'Tambah Kupon Berhasil!');
+        }
+        return back()->with('error', 'Tambah Kupon Gagal!');
     }
 
     /**
@@ -74,23 +103,34 @@ class CouponController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255',
-            'stock' => 'required|int',
+            'item_id'  => 'required',
+            'name' => 'required',
+            'stock' => 'required|numeric',
+            'percent' => 'required|numeric',
         ]);
 
-        $data = Coupon::find($id);
-        $data->name =  $validated['name'];
-        $data->stock =  $validated['stock'];
-        $data->save();
+        $stmt = Coupon::find($id);
+        $stmt->name =  $validated['name'];
+        $stmt->stock =  $validated['stock'];
+        $stmt->item_id =  $validated['item_id'];
+        $stmt->percent =  $validated['percent'];
+        $stmt->save();
 
-        return back()->with('success', 'Edit Berhasil!');
+        if ($stmt) {
+            return back()->with('success', 'Tambah Kupon Berhasil!');
+        }
+        return back()->with('error', 'Tambah Kupon Gagal!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Coupon $coupon)
+    public function destroy($id)
     {
-        //
+        $stmt = Coupon::find($id)->delete();
+        if ($stmt) {
+            return back()->with('success', 'Hapus Kupon Sukses');
+        }
+        return back()->with('error', 'Hapus Kupon Gagal');
     }
 }

@@ -34,13 +34,13 @@
 
         <!-- Main Content-->
         <div class="p-8 bg-white border-2 rounded-lg ">
-            <div class=" rounded ">
+            <div class="rounded ">
                 <div class="text-center text-gray-600">
                     <h4 class="text-2xl font-bold">Data Transaksi</h4>
                 </div>
                 <hr class="h-px my-3 bg-gray-200 border-0">
                 @role('admin')
-                    <div class="mb-3 text-gray-500 flex justify-between  text-md font-semibold">
+                    <div class="flex justify-between mb-3 font-semibold text-gray-500 text-md">
                         <span>SALDO</span>
                         <span>Rp. {{ number_format($saldo['data']['deposit']) }}</span>
 
@@ -91,7 +91,17 @@
                             </th>
                             <th>
                                 <span class="flex items-center justify-center">
-                                    Status
+                                    Status Trx.
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th>
+                                <span class="flex items-center justify-center">
+                                    Status Invoice
                                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -122,11 +132,17 @@
                         @foreach ($data as $d)
                             @if (Auth::user()->hasRole('admin') || $d['kode_pengguna'] == Auth::user()->id)
                                 <tr>
-                                    <td class="font-medium text-gray-900">{{ $d['ref_id'] }}</td>
+                                    <td class="font-medium text-gray-900">
+                                        <a href="{{ route('invoice', $d['invoice_id']) }}">
+
+                                            {{ $d['invoice_id'] }}
+                                        </a>
+                                    </td>
                                     <td>{{ $d->user->name }}</td>
                                     <td>Rp. {{ $d['price'] }}</td>
                                     <td>{{ $d['sn'] }}</td>
                                     <td>{{ $d['status'] }}</td>
+                                    <td>{{ $d->invoice['status'] }}</td>
                                     <td>{{ $d['created_at'] }}</td>
                                 </tr>
                             @endif

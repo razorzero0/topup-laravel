@@ -2,10 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Works on Firefox */
+/* Semua elemen */
+* {
+    scroll-behavior: smooth; /* Transisi scroll lembut */
+    scroll-snap-type: proximity;
+    --scrollbar-bg: linear-gradient(
+        180deg,
+        #bb25e0,
+        #4f46e5
+    ); /* Gradient untuk scrollbar thumb */
+    --scrollbar-track: #0e1524; /* Warna track */
+}
+
+/* Custom scrollbar untuk Chrome, Safari, dan Edge */
+::-webkit-scrollbar {
+    width: 1rem; /* Lebar scrollbar */
+    border-radius: 7px; /* Membulatkan scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track); /* Warna track scrollbar */
+    border-radius: 5px; /* Membulatkan track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-bg); /* Gradient untuk thumb */
+    border-radius: 7px; /* Membulatkan thumb scrollbar */
+    border: 3px solid var(--scrollbar-track); /* Menambah spasi antara thumb dan track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b346e5; /* Ubah warna saat hover */
+}
+
+/* Hilangkan panah pada scrollbar di Chrome */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
 .active {
     @apply bg-slate-100;
 }
 
-* {
-    scroll-behavior: smooth;
+.tabActive {
+    @apply text-purple-500 border-b-2 border-b-purple-500 hover:border-b-slate-200;
+}
+.tabActive > a {
+    @apply text-purple-500 hover:text-slate-500;
+}
+
+.btnActive {
+    @apply bg-orange-500 border-orange-600 text-gray-50;
+}
+
+.paymentActive {
+    @apply bg-slate-500 text-gray-50 border-slate-600;
+}
+
+.search-result {
+    @apply absolute z-50 w-full overflow-y-auto border bg-slate-800 border-slate-700 max-h-52; /* max-h-52 adalah max-height 200px */
+}
+
+.search-result a {
+    @apply block p-2 text-gray-200 no-underline; /* p-2 adalah padding 10px */
+}
+
+.search-result a:hover {
+    @apply bg-slate-600; /* bg-gray-200 adalah background hover */
+}
+
+.swal2-blur {
+    background: rgba(17, 24, 39, 0.55); /* Background transparan */
+    backdrop-filter: blur(10px); /* Efek blur */
+    -webkit-backdrop-filter: blur(10px); /* Efek blur untuk Safari */
+    color: white;
+}
+
+.tab-content,
+.tab-judul {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

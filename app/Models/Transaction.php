@@ -12,7 +12,7 @@ class Transaction extends Model
     use HasFactory;
     protected $fillable = [
         'kode_pengguna',
-        'ref_id',
+        'invoice_id',
         'customer_no',
         'buyer_sku_code',
         'status',
@@ -23,5 +23,10 @@ class Transaction extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'kode_pengguna', 'id');
+    }
+
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class, 'invoice_id', 'id');
     }
 }

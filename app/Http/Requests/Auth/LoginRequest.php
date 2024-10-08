@@ -48,7 +48,12 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
-
+        // **Update the last_login timestamp**
+        $user = Auth::user();
+        if ($user) {
+            $user->updated_at = now();
+            $user->save();
+        }
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -80,6 +85,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

@@ -7,6 +7,7 @@
 
     <title>Dashboard Algoora</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class=" bg-slate-100">
@@ -14,6 +15,7 @@
     @yield('content')
     @include('admin/layouts/footer')
     @stack('scripts')
+    @stack('alerts')
     <!--Start of Tawk.to Script-->
     {{-- <script type="text/javascript">
         var Tawk_API = Tawk_API || {},

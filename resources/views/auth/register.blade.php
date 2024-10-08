@@ -1,8 +1,8 @@
-@extends('home.layouts.app')
+@extends('auth.layouts.app')
 @section('content')
     <!-- source:https://codepen.io/owaiswiz/pen/jOPvEPB -->
-    <div class="flex justify-center min-h-screen text-gray-900 bg-gray-100">
-        <div class="flex justify-center flex-1 max-w-screen-xl m-0 bg-white shadow sm:m-10 sm:rounded-lg">
+    <div class="flex p-4 justify-center min-h-screen text-gray-900 bg-slate-900 ">
+        <div class="flex justify-center flex-1 max-w-screen-xl m-0 bg-white shadow sm:m-10 rounded-lg overflow-hidden">
             <div class="p-6 lg:w-1/2 xl:w-5/12 sm:p-12">
 
                 <div class="flex flex-col items-center ">
@@ -11,8 +11,8 @@
                     </h1>
                     <div class="flex-1 w-full mt-8">
                         <div class="flex flex-col items-center">
-                            <button
-                                class="flex items-center justify-center w-full max-w-xs py-2 font-bold text-gray-800 transition-all duration-300 ease-in-out bg-indigo-100 rounded-lg shadow-sm focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
+                            <a href="{{ route('google.redirect') }}"
+                                class="flex items-center justify-center w-full max-w-xs py-2 font-bold text-gray-800 transition-all duration-300 ease-in-out bg-indigo-50 border border-slate-300 rounded-lg shadow-sm focus:outline-none hover:shadow-md focus:shadow-sm focus:shadow-outline">
                                 <div class="p-2 bg-white rounded-full">
                                     <svg class="w-4" viewBox="0 0 533.5 544.3">
                                         <path
@@ -32,7 +32,7 @@
                                 <span class="ml-4">
                                     Sign Up with Google
                                 </span>
-                            </button>
+                            </a>
 
 
                         </div>
@@ -85,7 +85,7 @@
                                 @endforeach
 
                                 <button type="submit"
-                                    class="flex items-center justify-center w-full py-3 mt-5 font-semibold tracking-wide text-gray-100 transition-all duration-300 ease-in-out bg-indigo-500 rounded-lg hover:bg-indigo-700 focus:shadow-outline focus:outline-none">
+                                    class="flex items-center justify-center w-full py-2 mt-5 font-semibold tracking-wide text-gray-100 transition-all duration-300 ease-in-out bg-indigo-500 rounded-lg hover:bg-indigo-700 focus:shadow-outline focus:outline-none">
                                     <svg class="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -96,6 +96,11 @@
                                         Sign Up
                                     </span>
                                 </button>
+                                <div class="mt-2.5 text-center">
+                                    <a href="{{ route('index') }}" type="submit"
+                                        class="bg-gray-700 w-full block text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-600">Kembali
+                                        Beranda</a>
+                                </div>
                             </form>
                             <p class="mt-6 text-xs text-center text-gray-600">
                                 Saya setuju dengan

@@ -1,9 +1,9 @@
-@extends('home.layouts.app')
+@extends('auth.layouts.app')
 @section('content')
     <!-- https://play.tailwindcss.com/MIwj5Sp9pw -->
-    <div class="py-10">
+    <div class="p-4 ">
         <form method="POST" action="{{ route('login') }}"
-            class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+            class="flex rounded-lg bg-white  shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
             @csrf
             <div class="hidden lg:block  bg-cover">
                 <img src="{{ asset('assets/img/login.png') }}" />
@@ -11,10 +11,10 @@
             </div>
             <div class="w-full p-8 lg:w-1/2">
 
-                <h2 class="text-2xl font-semibold text-gray-700 text-center">Login</h2>
-                <p class="text-xl text-gray-600 text-center">Dashboard Algoora</p>
-                <a href="#"
-                    class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
+                <h2 class="text-2xl font-bold text-gray-700 text-center">Login</h2>
+                <p class="text-xl text-gray-600 text-center">Algoora Panel</p>
+                <a href="{{ route('google.redirect') }}"
+                    class="flex items-center justify-center mt-4 text-white rounded-lg hover:shadow-md bg-indigo-50 border border-slate-300 hover:bg-slate-100">
                     <div class="px-4 py-3">
                         <svg class="h-6 w-6" viewBox="0 0 40 40">
                             <path
@@ -41,7 +41,7 @@
                 <div class="mt-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
                     <input name="email"
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                        class="bg-gray-50 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                         type="email" />
                     @foreach ($errors->get('email') as $error)
                         <span class="font-medium my-1 text-sm text-red-800">{{ $error }}</span>
@@ -53,7 +53,7 @@
                         <a href="#" class="text-xs text-gray-500">Forget Password?</a>
                     </div>
                     <input name="password"
-                        class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                        class="bg-gray-50 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                         type="password" />
                     @foreach ($errors->get('password') as $error)
                         <span class="font-medium my-1 text-sm text-red-800">{{ $error }}</span>
@@ -72,7 +72,12 @@
                 </div>
                 <div class="mt-5">
                     <button type="submit"
-                        class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
+                        class="bg-purple-600 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
+                </div>
+                <div class="mt-2.5 text-center">
+                    <a href="{{ route('index') }}" type="submit"
+                        class="bg-gray-700 w-full block text-white font-bold py-2 px-4 rounded hover:bg-gray-600">Kembali
+                        Beranda</a>
                 </div>
                 <div class="mt-4 flex items-center justify-between">
                     <span class="border-b w-1/5 md:w-1/4"></span>

@@ -35,6 +35,7 @@ class DigiflazzService
             'customer_no' => $customerNo,  // Nomor pelanggan
             'ref_id' => $refId,  // ID unik untuk transaksi
             'sign' => $sign,  // Signature untuk verifikasi transaksi
+            'testing' => true,  // Signature untuk verifikasi transaksi
         ];
         try {
             // Mengirim request POST ke API Digiflazz
@@ -45,6 +46,43 @@ class DigiflazzService
             // Mengambil respons dan mengembalikannya dalam bentuk JSON
             $result = json_decode($response->getBody(), true);
             return $result;
+        } catch (\Exception $e) {
+            // Menangani error jika terjadi
+            Log::error('Error in Digiflazz transaction: ' . $e->getMessage());
+            return ['error' => 'Terjadi kesalahan dalam proses transaksi.'];
+        }
+    }
+    public function PriceList()
+    {
+        // Mendapatkan data dari environment (.env)
+        $username = env('DIGIFLAZZ_USERNAME');
+        $key = env('DIGIFLAZZ_PRODUCTION_KEY');
+
+        // Membuat sign berdasarkan aturan Digiflazz (username + key + ref_id)
+        $sign = md5($username . $key . 'pricelist');
+
+        // Data yang akan dikirim ke API Digiflazz
+        $body = [
+            'cmd' => 'prepaid',  // SKU produk dari Digiflazz
+            'username' => $username,
+            'sign' => $sign,  // Signature untuk verifikasi transaksi
+        ];
+
+        try {
+            // Pastikan menggunakan Collection
+
+            // Mengirim request POST ke API Digiflazz
+            $response = $this->client->post('price-list', [
+                'json' => $body
+            ]);
+
+            // Mengambil respons dan mengembalikannya dalam bentuk Collection
+            $result = json_decode($response->getBody(), true);
+
+            // Mengubah data menjadi Collection
+            $data = collect($result['data']);
+
+            return $data;
         } catch (\Exception $e) {
             // Menangani error jika terjadi
             Log::error('Error in Digiflazz transaction: ' . $e->getMessage());

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->string('item_name');
+            $table->bigInteger('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->bigInteger('price')->unsigned();
+            $table->bigInteger('total_price')->unsigned();
+            $table->string('buyer_sku_code');
+            $table->boolean('status')->default(0);
+            $table->bigInteger('image')->unsigned()->nullable();
+            $table->foreign('image')->references('id')->on('files')->onDelete('set null');;
+            $table->string('stock');
             $table->timestamps();
         });
     }

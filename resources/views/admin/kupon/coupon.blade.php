@@ -44,8 +44,29 @@
                         </div>
                     @endforeach
                 @endif
+                @if (session('success'))
+                    <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                        role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div>
+                            <span class="font-medium">{{ session('success') }}</span>
+                        </div>
+                    </div>
+                @endif
                 <div class="text-center ">
-                    <h4 class="text-2xl font-bold">Daftar Kupon</h4>
+                    <h4 class="text-2xl font-bold">Daftar Kaupon</h4>
+                </div>
+                <div class="flex justify-end mt-5">
+                    <button type="button" data-modal-target="add-coupon" data-modal-toggle="add-coupon"
+                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Tambah
+                        Kupon
+                    </button>
+                    @include('admin.kupon.add-modal')
                 </div>
                 <hr class="h-px my-5 bg-gray-200 border-0">
                 <table id="default-table">
@@ -53,7 +74,7 @@
                         <tr>
                             <th>
                                 <span class="flex items-center">
-                                    ID
+                                    NO
                                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -63,7 +84,27 @@
                             </th>
                             <th>
                                 <span class="flex items-center">
-                                    Nama
+                                    Kode Kupon
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th>
+                                <span class="flex items-center">
+                                    Item
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th>
+                                <span class="flex items-center">
+                                    Diskon
                                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -94,11 +135,14 @@
                             <tr>
                                 <td class="font-medium text-gray-900 whitespace-nowrap">{{ $coupon['id'] }}</td>
                                 <td>{{ $coupon['name'] }}</td>
+                                <td>{{ $coupon->item->item_name }} (Rp.
+                                    {{ number_format($coupon->item->price) }})</td>
+                                <td>{{ $coupon['percent'] }}%</td>
                                 <td>{{ $coupon['stock'] }}</td>
                                 <td class="">
 
-                                    <button type="button" data-modal-target="authentication-modal{{ $coupon['id'] }}"
-                                        data-modal-toggle="authentication-modal{{ $coupon['id'] }}"
+                                    <button type="button" data-modal-target="edit-coupon{{ $coupon['id'] }}"
+                                        data-modal-toggle="edit-coupon{{ $coupon['id'] }}"
                                         class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center ">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4"
                                             viewBox="0 0 16 16">
@@ -110,16 +154,23 @@
                                         </svg>
                                     </button>
                                     @include('admin.kupon.edit-modal')
-                                    {{-- <button type="button"
-                                    class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-3 py-2.5 text-center ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                                    </svg>
-                                    </svg>
+                                    <form class="inline" method="post"
+                                        action="{{ route('coupon.destroy', $coupon['id']) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg  font-medium rounded-lg text-sm px-3 py-2.5 text-center "
+                                            onclick="return confirm(
+                                    'Apakah Anda yakin ingin melanjutkan?')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                                            </svg>
+                                            </svg>
 
-                                </button> --}}
+                                        </button>
+                                    </form>
 
                                 </td>
                                 </td>
