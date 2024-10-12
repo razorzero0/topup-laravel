@@ -72,6 +72,10 @@
     @apply bg-slate-600; /* bg-gray-200 adalah background hover */
 }
 
+.information > ol {
+    @apply list-decimal;
+}
+
 .swal2-blur {
     background: rgba(17, 24, 39, 0.55); /* Background transparan */
     backdrop-filter: blur(10px); /* Efek blur */

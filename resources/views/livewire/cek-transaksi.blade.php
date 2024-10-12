@@ -126,12 +126,12 @@
                                                             {{ substr($data['customer_phone'], 0, 3) . str_repeat('X', strlen($data['customer_phone']) - 6) . substr($data['customer_phone'], -3) }}
                                                         </td>
                                                         <td class="px-6 py-4">
-                                                            Rp. {{ number_format($data['amount']) }}
+                                                            Rp. {{ number_format($data['amount'], 0, ',', '.') }}
                                                         </td>
                                                         <td class="px-6 py-4">
                                                             @if (strtolower($data['status']) == 'paid')
                                                                 <span
-                                                                    class="bg-green-100 text-green-800 text-xs font-medium me-2 px-4 py-0.5 rounded-xl dark:bg-gray-700 dark:text-green-400 border border-green-400">Green</span>
+                                                                    class="bg-green-100 text-green-800 text-xs font-medium me-2 px-4 py-0.5 rounded-xl dark:bg-gray-700 dark:text-green-400 border border-green-400">{{ $data['status'] }}</span>
                                                             @elseif(strtolower($data['status']) == 'failed')
                                                                 <span
                                                                     class="bg-red-100 text-red-800 text-xs font-medium me-2 px-4 py-0.5 rounded-xl dark:bg-gray-700 dark:text-red-400 border border-red-400">{{ $data['status'] }}</span>

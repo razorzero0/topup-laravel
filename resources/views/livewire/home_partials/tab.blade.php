@@ -1,5 +1,5 @@
-<div class="my-4 dark:border-gray-700">
-    <ul class="flex gap-2 -mb-px overflow-x-scroll text-sm font-medium text-center tab-judul sm:gap-8"
+<div class="my-4 dark:border-gray-700 mt-12 px-4">
+    <ul class="flex gap-4 -mb-px overflow-x-scroll text-sm font-medium text-center tab-judul sm:gap-8"
         id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content"
         data-tabs-active-classes="text-white border bg-purple-600 hover:text-purple-400 dark:text-purple-500 dark:hover:text-purple-500 border-slate-200 dark:border-purple-500"
         data-tabs-inactive-classes="border bg-slate-950 border-slate-200 text-gray-400 hover:text-purple-700 hover:border-slate-100 dark:text-gray-400 border-gray-100 dark:border-gray-700 dark:hover:text-gray-300"
@@ -28,7 +28,7 @@
 
     </ul>
 </div>
-<div id="default-styled-tab-content" class="px-4">
+<div id="default-styled-tab-content" class="px-4 mt-6 sm:mt-8">
 
     @foreach ($categories as $category)
         <div class="hidden pt-2 " id="styled-{{ $category->name }}" role="tabpanel"

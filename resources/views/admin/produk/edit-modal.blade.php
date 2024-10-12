@@ -47,8 +47,8 @@
                     @endforeach
                 @endif
                 <hr class="h-px my-5 bg-gray-200 border-0">
-                <form method="post" action="{{ route('product.update', $product->id) }}" class="max-w-xl pt-4 mx-auto"
-                    enctype="multipart/form-data">
+                <form method="post" action="{{ route('product.update', $product->id) }}"
+                    class=" max-w-xl sm:max-w-4xl pt-4 mx-auto" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div>
@@ -92,10 +92,9 @@
                             name="name" value="{{ old('name', $product->name) }}" required />
                     </div>
                     <div class="mb-5">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
-                        <input type="description" id="description" name="description"
-                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            value="{{ old('description', $product->description) }}" required />
+                        <label for="data"
+                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                        <textarea id="wsgi" name="description">{{ $product->description }}</textarea>
                     </div>
                     <div class="mb-5">
                         <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Gambar</label>
@@ -146,3 +145,15 @@
         </div>
     </div>
 @endsection
+@push('wsgi')
+    <script src="https://cdn.tiny.cloud/1/y86wfduvullpzpqktwbd90lzz04o8wx9p3vis3euu5u23xzn/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#wsgi',
+            // Replace this CSS selector to match the placeholder element for TinyMCE
+            plugins: 'code lists',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code '
+        });
+    </script>
+@endpush

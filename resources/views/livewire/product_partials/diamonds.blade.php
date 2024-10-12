@@ -24,12 +24,12 @@
                         <a href="#box-payment" @click="activeButton = {{ $item['id'] }}"
                             :class="{ 'btnActive': activeButton === {{ $item['id'] }} }" type="button"
                             wire:click="addItem({{ $item['price'] }}, '{{ addslashes($item['item_name']) }}', '{{ $item['id'] }}','{{ $item['buyer_sku_code'] }}')"
-                            class="flex flex-col items-center justify-center h-24 gap-2 p-1 py-2 font-medium text-center border rounded-md sm:h-24 btn bg-slate-700 text-slate-400 border-slate-600 rounded-s-lg hover:bg-orange-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-orange-400 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+                            class="flex flex-col items-center justify-center h-24 p-1 py-2 font-medium text-center border rounded-md  btn bg-slate-700 text-slate-400 border-slate-600 rounded-s-lg hover:bg-orange-400 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-orange-400 focus:text-white dark:border-white dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700">
 
                             <span class="block text-xs font-medium">{{ $item['item_name'] }}</span>
                             <div class=" flex w-full justify-around items-center ">
                                 <hr class="border border-slate-500 w-[80%]" />
-                                <img class="w-4 h-4" src="{{ asset('assets/img/diamond.webp') }}" />
+                                <img class="w-auto h-4 sm:h-8 " src="{{ asset($item->file['image']) }}" />
                             </div>
                             <span class="text-xs font-light"> (Rp.{{ number_format($item['price']) }})</span>
                         </a>

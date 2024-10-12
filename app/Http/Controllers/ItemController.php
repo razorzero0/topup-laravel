@@ -47,7 +47,11 @@ class ItemController extends Controller
         $data = $this->digiflazzService->where('brand', $product->name)->sortBy('price');
         // dd($data);
 
-        return view('admin.item.add-modal', ['data' => $data, 'id' => $id]);
+        if ($data) {
+            return view('admin.item.add-modal', ['data' => $data, 'id' => $id]);
+        } else {
+            return back()->with('error', 'Ada gangguan jaringan, silakan coba lagi');
+        }
     }
 
     /**

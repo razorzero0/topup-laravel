@@ -22,8 +22,8 @@
                         class="flex flex-col items-center justify-center w-full pb-4 space-y-4 border-b border-gray-200">
                         <div class="flex justify-between w-full">
                             <p class="text-base leading-4 text-gray-300 dark:text-white">Subtotal</p>
-                            <p class="text-base leading-4 text-gray-300 subtotal dark:text-gray-300">Rp.
-                                {{ number_format($price) }}
+                            <p class="text-base leading-4 text-gray-300 subtotal dark:text-gray-300">Rp
+                                {{ number_format($price, 0, ',', '.') }}
                             </p>
                         </div>
                         <div class="flex justify-between w-full">
@@ -48,8 +48,8 @@
                     </div>
                     <div class="flex items-center justify-between w-full">
                         <p class="text-base font-semibold leading-4 text-gray-300 dark:text-white">Total</p>
-                        <p class="text-base font-semibold leading-4 text-gray-300 total dark:text-gray-300">Rp.
-                            {{ number_format($total) }}
+                        <p class="text-base font-semibold leading-4 text-gray-300 total dark:text-gray-300">Rp
+                            {{ number_format($total, 0, ',', '.') }}
                         </p>
                     </div>
                     <button wire:click="makeTransaction" id="checkoutBtn" type="button"
@@ -83,7 +83,7 @@
     <script>
         $wire.on('alertSubmit', (event) => {
             Swal.fire({
-                title: event[0]['type'] === 'success' ? 'Berhasil' : 'Proses Gagal',
+                title: event[0]['type'] === 'success' ? 'Proses Berhasil' : 'Proses Gagal',
                 text: event[0]['message'],
                 icon: event[0]['type'],
                 customClass: {

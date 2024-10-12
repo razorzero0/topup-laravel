@@ -19,10 +19,10 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">Resources</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline">Algoora</a>
+                            <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Github</a>
+                            <a href="https://laravel.com/" class="hover:underline">Laravel</a>
                         </li>
                     </ul>
                 </div>
@@ -30,10 +30,10 @@
                     <h2 class="mb-6 text-sm font-semibold text-gray-300 uppercase ">Follow us</h2>
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
-                            <a href="#" class="hover:underline ">Instagram</a>
+                            <a href="https://www.instagram.com/kode_bermasalah/" class="hover:underline ">Instagram</a>
                         </li>
                         <li>
-                            <a href="#" class="hover:underline">Telegram</a>
+                            <a href="https://wa.me/{{ env('APP_ADMIN') }}" class="hover:underline">Whatsapp</a>
                         </li>
                     </ul>
                 </div>

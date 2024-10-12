@@ -11,11 +11,11 @@
                 </p>
                 <p class="p-3 px-2 text-white">
 
-                    <span>Kontak Anda </span>
+                    <span>Masukkan Kontak Anda </span>
                 </p>
             </div>
             <div class="p-7 ">
-                <span class="">Email:</span>
+                {{-- <span class="">Email :</span>
                 <div class="relative my-3">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -38,7 +38,7 @@ wire:model.blur="email" @endif>
                 </div>
                 @error('email')
                     <x-input-error :messages="$message" class="mb-1 -mt-1" />
-                @enderror
+                @enderror --}}
 
 
                 <span class="text-center">No. HP
@@ -47,7 +47,7 @@ wire:model.blur="email" @endif>
                     :
                 </span>
 
-                <div class="relative mt-3">
+                <div class="relative mt-3 mb-1">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
 
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -64,6 +64,10 @@ wire:model.blur="email" @endif>
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="whatsapp : 085XXXXXXXXXX">
                 </div>
+                <p class="text-justify text-xs italic">Masukkan nomor WhatsApp yang benar, karena status dan proses
+                    transaksi akan dikirim lewat WhatsApp. Terima kasih!
+
+                </p>
                 @error('phone')
                     <x-input-error :messages="$message" class="mt-1" />
                 @enderror

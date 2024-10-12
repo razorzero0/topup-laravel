@@ -67,7 +67,7 @@ class CouponController extends Controller
     {
         $validated = $request->validate([
             'item_id'  => 'required',
-            'name' => 'required',
+            'name' => 'required|unique:coupons,name',
             'stock' => 'required|numeric',
             'percent' => 'required|numeric|min:0|max:100',
         ]);

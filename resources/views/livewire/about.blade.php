@@ -10,7 +10,7 @@
             <h2 class="my-4 font-bold text-3xl text-slate-200  sm:text-4xl ">Tentang <span
                     class="text-indigo-600">{{ env('APP_NAME') }}</span>
             </h2>
-            <p class="text-gray-300">
+            <p class="text-gray-300 text-justify">
                 Algoora adalah toko digital terpercaya yang menyediakan berbagai jenis top-up diamond untuk game populer
                 seperti Mobile Legends, Free Fire, Honor of Kings, dan lainnya. Dengan layanan yang cepat dan aman,
                 Algoora memastikan kebutuhan top-up Anda terpenuhi dengan mudah dan nyaman. Setiap transaksi di platform

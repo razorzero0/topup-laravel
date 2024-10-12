@@ -46,54 +46,40 @@
                             </button>
                         </h2>
 
-                        <div id="accordion-flush-body-{{ $no }}"
+                        <div id="accordion-flush-body{{ $no }}"
                             aria-labelledby="accordion-flush-heading-{{ $no }}">
                             <div class="grid grid-cols-2 gap-2 pt-4 lg:grid-cols-3">
                                 @foreach ($channel as $data)
+                                    @php
+                                        $feeItem = $fee->where('group', $data['group'])->first();
+                                        $feePlusPrice = isset($feeItem['fee'])
+                                            ? $itemPrice + $feeItem['fee']
+                                            : $itemPrice;
+                                    @endphp
                                     <button
-                                        @if ($itemPrice < 10000 && $data['total_fee']['flat'] <= 3000) @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $itemPrice }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" @endif
-                                        @if ($itemPrice >= 10000 && $data['total_fee']['flat'] <= 750) @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $itemPrice }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')"
-                                        @elseif ($itemPrice >= 10000 && $data['total_fee']['flat'] <= 3500)
-                                        @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $itemPrice + 3000 }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" 
-                                        @elseif ($itemPrice >= 10000 && $data['total_fee']['flat'] <= 4500)
-                                        @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $itemPrice + 4000 }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" @endif
+                                        @if ($itemPrice >= $data['minimum_amount']) @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $feePlusPrice }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" @endif
                                         :class="{ 'paymentActive': activeButton === '{{ $data['code'] }}' }"
                                         class="h-24 p-2 border sm:h-28 rounded-xl bg-slate-700 text-slate-200 border-slate-600 hover:bg-slate-500">
-
-
                                         <div class="flex justify-between pb-2 border-b">
                                             <img class="w-14 p-0.5 rounded-md bg-slate-200 h-6 border border-slate-700"
                                                 src="{{ $data['icon_url'] }}" />
-
                                             <span
                                                 class="text-xs payment-price sm:text-md font-extralight sm:font-medium">
-                                                @if ($itemPrice < 6000)
-                                                    @if ($data['total_fee']['flat'] <= 3000)
-                                                        Rp. {{ number_format($itemPrice) }}
-                                                    @else
-                                                        <span class="text-xs text-red-500 ">Min. Rp. 10,000</span>
-                                                    @endif
+
+                                                @if ($itemPrice >= $data['minimum_amount'])
+                                                    Rp {{ number_format($feePlusPrice, 0, ',', '.') }}
                                                 @else
-                                                    @if ($data['total_fee']['flat'] <= 3000)
-                                                        Rp. {{ number_format($itemPrice) }}
-                                                    @elseif ($data['total_fee']['flat'] <= 4000)
-                                                        Rp. {{ number_format($itemPrice + 3000) }}
-                                                    @else
-                                                        Rp. {{ number_format($itemPrice + 4000) }}
-                                                    @endif
+                                                    <span class="text-xs text-red-500 ">Min. Rp
+                                                        {{ number_format($data['minimum_amount'], 0, ',', '.') }}</span>
                                                 @endif
-                                                {{-- wire:click="addItem({{ $data['price'] }})" --}}
+
                                             </span>
                                         </div>
                                         <div class="pt-2">
                                             <span class="text-xs font-light">{{ $data['name'] }}</span>
                                         </div>
-
-
                                     </button>
                                 @endforeach
-
-
                             </div>
                         </div>
 
@@ -102,9 +88,6 @@
                         $no++;
                     @endphp
                 @endforeach
-
-
-
 
             </div>
 

@@ -53,45 +53,45 @@ class TransactionController extends Controller
     {
         // Validasi request
 
-        $validator = Validator::make($request->all(), [
-            'customer_no' => 'required|string',
-            'buyer_sku_code' => 'string',
-            'status' => 'string',
-            'buyer_last_saldo' => 'integer',
-            'sn' => 'string',
-            'price' => 'required|integer',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'customer_no' => 'required|string',
+        //     'buyer_sku_code' => 'string',
+        //     'status' => 'string',
+        //     'buyer_last_saldo' => 'integer',
+        //     'sn' => 'string',
+        //     'price' => 'required|integer',
+        // ]);
 
-        $hook = $this->digiflazzService->makeTransaction($request->customer_no, $this->ref_id, $request->buyer_sku_code);
+        // $hook = $this->digiflazzService->makeTransaction($request->customer_no, $this->ref_id, $request->buyer_sku_code);
 
-        if (isset($hook['data']['status']) && $request->customer_no && !$validator->fails()) {            // Simpan data ke tabel transactions
-            Transaction::create([
-                'ref_id' => $this->ref_id,
-                'kode_pengguna' => $this->user_id,
-                'customer_no' => $request->customer_no,
-                'buyer_sku_code' => $request->buyer_sku_code,
-                'status' => 'pending',
-                'buyer_last_saldo' => '0',
-                'sn' => 'topup',
-                'price' => $request->price,
-            ]);
+        // if (isset($hook['data']['status']) && $request->customer_no && !$validator->fails()) {            // Simpan data ke tabel transactions
+        //     Transaction::create([
+        //         'ref_id' => $this->ref_id,
+        //         'kode_pengguna' => $this->user_id,
+        //         'customer_no' => $request->customer_no,
+        //         'buyer_sku_code' => $request->buyer_sku_code,
+        //         'status' => 'pending',
+        //         'buyer_last_saldo' => '0',
+        //         'sn' => 'topup',
+        //         'price' => $request->price,
+        //     ]);
 
 
-            $from = [
-                'email' => 'admin@algoora.biz.id',
-                'name' => 'Mailtrap Test'
-            ];
+        //     $from = [
+        //         'email' => 'admin@algoora.biz.id',
+        //         'name' => 'Mailtrap Test'
+        //     ];
 
-            $to = ['muhainun059@gmail.com'];
-            $subject = 'You are awesome!';
-            $text = 'Congrats for sending test email with Mailtrap!';
-            $category = 'Integration Test';
+        //     $to = ['muhainun059@gmail.com'];
+        //     $subject = 'You are awesome!';
+        //     $text = 'Congrats for sending test email with Mailtrap!';
+        //     $category = 'Integration Test';
 
-            $this->mailtrapService->sendEmail($from, $to, $subject, $text, $category);
-            return $hook;
-        } else {
-            return false;
-        }
+        //     $this->mailtrapService->sendEmail($from, $to, $subject, $text, $category);
+        //     return $hook;
+        // } else {
+        //     return false;
+        // }
 
         // Redirect atau response setelah sukses menyimpan
         // return redirect()->back()->with('success', 'Transaksi Berhasil Disimpan!');
@@ -161,7 +161,12 @@ class TransactionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        $stmt = Transaction::find($id)->delete();
+        if ($stmt) {
+            return back()->with('success', 'Hapus Data Transaksi Sukses');
+        }
+        return back()->with('error', 'Hapus Data Transaksi Gagal');
     }
 
 

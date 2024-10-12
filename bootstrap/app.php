@@ -14,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->append(EnsureTokenIsValid::class);
+        $middleware->validateCsrfTokens(except: [
+            // 'https://free-crucial-shiner.ngrok-free.app/digiflazz/callback',
+            '/digiflazz/callback',
+            '/tripay/callback',
+        ]);
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

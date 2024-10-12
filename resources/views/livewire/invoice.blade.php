@@ -43,8 +43,11 @@
             <p class="text-xs font-semibold uppercase ">Factura CUFE:</p>
             <p class="font-semibold">{{ $invoice->tripay_reference }} </p>
         </div> --}}
-        <p class="mt-3 font-bold text-center text-md sm:text-xl">Pembayaran Menggunakan QRIS</p>
-        <div class="grid grid-cols-2 gap-4 py-5 mb-4 border-b sm:grid-cols-2">
+        <p class="mt-3 font-bold text-center text-md sm:text-xl">Pembayaran Menggunakan
+            {{ $invoice['method'] == 'QRIS2' ? 'QRIS' : $invoice['method'] }}</p>
+        <P class="mt-1 text-center text-sm sm:text-lg">Pastikan anda melakukan pembayaran sebelum melewati batas
+            pembayaran dan dengan nominal yang tepat</P>
+        <div class="grid grid-cols-1 gap-4 py-5 mb-4 border-b sm:grid-cols-2">
             <div>
                 <p class="text-slate-300 ">Status:</p>
                 <p
@@ -56,12 +59,12 @@
 
                 </p>
                 <div class="my-3">
-                    <p class=" text-slate-300">Email:
+                    <p class=" text-slate-300">Email (admin):
 
                     </p>
 
                     <p class="font-semibold">
-                        {{ $invoice['customer_email'] }}</p>
+                        {{ $invoice['customer_email'] }} </p>
                 </div>
                 <div class="my-3 ">
                     <p class=" text-slate-300">Nomer HP:
@@ -125,7 +128,7 @@
             <div class="p-2 border rounded-md ">
                 <p class="text-slate-300 text-md ">Rincian transaksi:</p>
                 @foreach ($items as $item)
-                    <p class="text-lg ">{{ $item['name'] }} ({{ number_format($item['price'], 0, ',', '.') }}) x
+                    <p class=" sm:text-lg ">{{ $item['name'] }} ({{ number_format($item['price'], 0, ',', '.') }}) x
                         {{ $item['quantity'] }}</p>
                 @endforeach
             </div>

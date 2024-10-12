@@ -5,10 +5,13 @@ namespace App\Livewire;
 use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Item;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Services\DigiflazzService;
+use App\Services\MailtrapService;
 use App\Services\TripayService;
+use App\Services\WhatsappService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Validate;
@@ -18,7 +21,9 @@ use Illuminate\Support\Str;
 class ProductDetail extends Component
 {
 
-    public $user_id, $email, $tripayService, $product, $kodeKupon, $diskonKupon, $data, $payment, $price, $itemPrice, $total, $itemId, $itemCode, $itemName, $payName, $payCode, $phone, $id_player;
+    public $user_id, $email, $tripayService, $product, $kodeKupon, $diskonKupon, $data, $payment, $price, $itemPrice, $total, $itemId, $itemCode, $itemName, $payName, $payCode, $phone, $id_player, $category;
+
+    public $deskripsiPlayer, $alertPlayer, $fee, $kuponStatus;
     public function rules()
     {
         return [
@@ -37,7 +42,7 @@ class ProductDetail extends Component
             'payName' => 'required|string',
             'payCode' => 'required|string',
             'phone' => 'required|numeric|min:10',
-            'id_player' => 'required|string',
+            'id_player' => 'required',
         ];
     }
 
@@ -73,25 +78,28 @@ class ProductDetail extends Component
             'phone.required' => 'Nomor telepon tidak boleh kosong.',
             'phone.numeric' => 'Nomor telepon harus berupa angka.',
             'phone.min' => 'Nomor telepon harus memiliki minimal 10 karakter.',
-            'id_player.required' => 'ID pemain tidak boleh kosong.',
-            'id_player.string' => 'ID pemain harus berupa teks.',
+            'id_player.required' => 'ID/Nomor tidak boleh kosong.',
         ];
     }
 
     // Masih bisa melakukan dependency injection di sini
     public function mount($slug, TripayService $tripayService)
     {
+        $this->kuponStatus = 0;
+        $this->fee = collect(Payment::all());
         $this->user_id = Auth::id() ?? 1;
         $this->email = env('APP_EMAIL');
         // Ambil produk berdasarkan slug
         $this->product = Product::where('slug', $slug)->first();
+
+        $this->category = $this->product->category['name'] ?? null;
 
         // Ambil item yang sesuai dengan kondisi
         $this->data = Item::whereHas('product', function ($query) use ($slug) {
             $query->where('slug', $slug);
         })
             ->where('status', true)  // Filter item dengan status true
-            ->where('stock', '>', 0)  // Filter item dengan stock > 1
+            ->where('stock', '>', 1)  // Filter item dengan stock > 1
             ->get();
 
         // Langsung gunakan tripayService di sini untuk mengambil channel pembayaran
@@ -103,6 +111,23 @@ class ProductDetail extends Component
             $this->payment = collect($payment['data'])->groupBy('group')->reverse();
         } else {
             $this->payment = collect();  // Jika gagal, set sebagai collection kosong
+        }
+
+
+        switch (trim(strtolower($this->category))) {
+            case 'games':
+                $this->deskripsiPlayer = "Masukkan ID game :";
+                $this->alertPlayer = "⚠️Harap memasukkan ID game dengan hati-hati. Untuk Mobile Legends, format yang benar adalah ID Pengguna + Zone ID, misal dari 199833623(3716) ubah menjadi 1998336233716 \n dan untuk game lainnya, cukup masukkan ID pengguna saja. Pastikan ID yang dimasukkan sudah benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
+                break;
+            case 'pulsa':
+                $this->deskripsiPlayer = "Masukkan Nomer HP :";
+                $this->alertPlayer = "⚠️ Mohon pastikan nomor handphone yang Anda masukkan benar, ya. Kami tidak bertanggung jawab atas kesalahan input nomor, dan jika nomor yang dimasukkan keliru, pulsa atau paket data bisa terkirim ke nomor yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
+                break;
+            default:
+                // Penanganan jika category tidak dikenali
+                $this->deskripsiPlayer = "Masukkan ID/No tujuan";
+                $this->alertPlayer = "⚠️ Harap memasukkan ID/No tujuan dengan benar.";
+                break;
         }
     }
 
@@ -137,6 +162,7 @@ class ProductDetail extends Component
             $priceAfterDiscount = $this->total - $discount;
             $this->diskonKupon = $coupon->percent;
             $this->total = $priceAfterDiscount;
+            $this->kuponStatus = 1;
 
             // Dispatch event untuk notifikasi sukses
             $this->dispatch('alert', ['type' => 'success', 'message' => 'Kupon valid dan stock tersedia!']);
@@ -146,37 +172,31 @@ class ProductDetail extends Component
         }
     }
 
-    public function makeTransaction(TripayService $tripayService, DigiflazzService $digiflazzService)
+    public function sukses()
     {
 
-        // dd($this->user_id ?? 1);
-        $this->validate();
+        $this->total = '';
+        $this->price = '';
+        $this->itemName = '';
+        $this->itemId = '';
+        $this->itemCode = '';
+        $this->itemPrice = '';
+        $this->payName = '';
+        $this->payCode = '';
+        $this->phone = '';
+        $this->id_player = '';
+        $this->kodeKupon = '';
+        $this->kuponStatus = 0;
+    }
 
-        $random = rand(100000000000, 999999999999);
 
-        $method = $this->payCode;
-        $merchantRef = 'ALG' . $random;
-        $amount = $this->total;
-        $customerDetails = [
-            'name' => 'user' . $random,  // Ganti dengan nama produk yang diinginkan
-            'email' => $this->email,          // Ganti dengan harga produk
-            'phone' => $this->phone            // Ganti dengan jumlah produk
-        ];
 
-        $orderItems = [
-            [
-                'name' => $this->itemName,
-                'price' => $this->total,
-                'quantity' => 1,
-                // Jika perlu, tambahkan `sku`, `product_url`, dan `image_url`
-            ]
-        ];
-
+    public function start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService)
+    {
 
         if ($this->total >= 1000) {
             $tripay = $tripayService->makeTransaction($method, $merchantRef, $amount, $customerDetails, $orderItems);
             if ($tripay['success']) {
-                // dd($tripay);
                 // Create the invoice
                 Invoice::create([
                     'id' => $tripay['data']['merchant_ref'], // Generate UUID
@@ -201,13 +221,16 @@ class ProductDetail extends Component
                 ]);
                 Transaction::create([
                     'invoice_id' =>  $tripay['data']['merchant_ref'],
+                    'ref_id' => $merchantRef,
                     'kode_pengguna' => $this->user_id,
                     'customer_no' => $this->id_player,
+                    'customer_phone' => $this->phone,
                     'buyer_sku_code' => $this->itemCode,
-                    'status' => 'pending',
+                    'status' => 'Created',
+                    'sn' => '-',
                     'price' => $this->total,
-
                 ]);
+
                 // Redirect to the invoice page
                 if (isset($tripay['data']['pay_url'])) {
                     return redirect($tripay['data']['pay_url']);
@@ -220,39 +243,107 @@ class ProductDetail extends Component
             }
         } else if ($this->total >= 0 && $this->total <= 999) {
 
-            $hook = $digiflazzService->makeTransaction($this->id_player, $merchantRef, $this->itemCode);
 
             // dd($hook);
-            if (isset($hook['data']['status'])) {
-                if (
-                    strtolower($hook['data']['status']) == 'pending' ||
-                    strtolower($hook['data']['status']) == 'sukses'
-                ) {
-                    dd($hook);
-                    Transaction::create([
-                        'ref_id' => $merchantRef,
-                        'kode_pengguna' => $this->user_id,
-                        'customer_no' => $this->id_player,
-                        'buyer_sku_code' => $this->itemCode,
-                        'status' => 'pending',
-                        'buyer_last_saldo' => '0',
-                        'sn' => 'topup',
-                        'price' => $this->total,
-                    ]);
+            if ($this->kuponStatus) {
+                $hook = $digiflazzService->makeTransaction($this->id_player, $merchantRef, $this->itemCode);
+                if (isset($hook['data']['status'])) {
+                    if (
+                        strtolower($hook['data']['status']) == 'pending' ||
+                        strtolower($hook['data']['status']) == 'sukses'
+                    ) {
+                        Transaction::create([
+                            'ref_id' => $merchantRef,
+                            'kode_pengguna' => $this->user_id,
+                            'customer_no' => $this->id_player,
+                            'customer_phone' => $this->phone,
+                            'buyer_sku_code' => $this->itemCode,
+                            'status' => 'Pending',
+                            'buyer_last_saldo' => '0',
+                            'sn' => '-',
+                            'price' => $this->total,
+                        ]);
+
+
+                        $this->kuponStatus = 0;
+                        $this->dispatch('alert', ['type' => 'success', 'message' => 'Transaksi berhasil silahkan tunggu item masuk ke akun anda!']);
+                    } else {
+                        $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
+                    }
                 } else {
-                    $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
+                    $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi atau refresh halaman.']);
                 }
             } else {
-                $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
+                $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon refresh halaman.']);
             }
         } else {
             $this->dispatch('alert', ['type' => 'error', 'message' => 'Pembayaran dibawah Rp 1.000 tidak didukung!']);
         }
     }
 
+    public function makeTransaction(TripayService $tripayService, DigiflazzService $digiflazzService)
+    {
+
+        // $trx = Transaction::where('ref_id', 'ALG751890681001')->first();
+
+        // $tes = $whatsappService->validasiMessage($trx->invoice_id, env('APP_NO'), $trx->price, $trx['status']);
+        // dd($tes);
+
+        $this->validate();
+
+
+        $random = rand(100000000000, 999999999999);
+
+        $method = $this->payCode;
+        $merchantRef = 'ALG' . $random;
+        $amount = $this->total;
+        $customerDetails = [
+            'name' => 'user' . $random,  // Ganti dengan nama produk yang diinginkan
+            'email' => $this->email,          // Ganti dengan harga produk
+            'phone' => $this->phone            // Ganti dengan jumlah produk
+        ];
+
+        $orderItems = [
+            [
+                'name' => $this->itemName,
+                'price' => $this->total,
+                'quantity' => 1,
+                // Jika perlu, tambahkan `sku`, `product_url`, dan `image_url`
+            ]
+        ];
+
+        $tes = 'CU-' . $random;
+        $cek = substr($this->itemCode, 0, 2);
+        $id = '';
+        if (strtolower($cek) == 'ml') {
+            $id = 'mlu';
+        } else if (strtolower($cek) == 'ff') {
+            $id = 'ffu';
+        }
+
+        $stmt = 1;
+        if ($id) {
+            $stmt = $digiflazzService->makeTransaction($this->id_player, $tes, $id);
+            $stmt = isset($stmt['error']) ? 0 : 1;
+        }
+
+        $cekStock = Item::where('buyer_sku_code', $this->itemCode)->first();
+        // dd($cekStock['stock']);
+        if ($cekStock['stock'] > 1) {
+            if ($stmt) {
+                $this->start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService);
+            } else {
+                $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
+            }
+        } else {
+            $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, Stock Item Habis! Mohon coba item lain.']);
+        }
+    }
+
 
     public function render()
     {
+        // dd($this->fee);
         return view('livewire.product');
     }
 }

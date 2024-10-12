@@ -17,7 +17,14 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@tiptap/core": "^2.8.0",
+        "@tiptap/pm": "^2.8.0",
+        "@tiptap/starter-kit": "^2.8.0",
         "flowbite": "^2.5.1",
+        "flowbite-typography": "^1.0.4",
         "simple-datatables": "^9.1.0"
+    },
+    "overrides": {
+        "prosemirror-model": "1.19.3"
     }
 }

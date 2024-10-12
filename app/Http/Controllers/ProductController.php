@@ -237,8 +237,8 @@ class ProductController extends Controller
         // Lakukan validasi data
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'company' => 'required',
+            // 'description' => 'required',
+            // 'company' => 'required',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,,webp|max:2048',
         ]);
 
@@ -259,8 +259,8 @@ class ProductController extends Controller
         $product->slug = $slug;
         $product->category_id = $request->category_id;
         $product->name = $request->name;
-        $product->description = $request->description;
-        $product->company = $request->company;
+        $product->description = $request->description ?? "";
+        $product->company = $request->company ?? "";
 
         // Simpan perubahan ke database
         if ($product->save()) {

@@ -13,7 +13,9 @@ class Transaction extends Model
     protected $fillable = [
         'kode_pengguna',
         'invoice_id',
+        'ref_id',
         'customer_no',
+        'customer_phone',
         'buyer_sku_code',
         'status',
         'buyer_last_saldo',

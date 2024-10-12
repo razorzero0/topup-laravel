@@ -11,12 +11,13 @@
                 </p>
                 <p class="p-3 px-2 text-white">
 
-                    <span>ID Player</span>
+                    <span>Masukkan Tujuan </span>
                 </p>
             </div>
-            <div class=" p-7">
+            <div class=" px-7 py-4">
+                <p class="mb-3">{{ $deskripsiPlayer }}</p>
 
-                <div class="relative mb-3">
+                <div class="relative mb-1">
                     <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
 
                         <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -25,22 +26,16 @@
                                 d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
                                 clip-rule="evenodd" />
                         </svg>
-
                     </div>
                     <input wire:model.blur="id_player" id="idPlayer" type="text" id="input-group-1"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Masukkan ID game">
+                        class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="{{ $deskripsiPlayer }}">
+
                 </div>
-                @error('id_player')
-                    <x-input-error :messages="$message" class="mt-1" />
-                @enderror
-
-                {{-- <div class="flex justify-end mt-5">
-                    <button id="cekKuponBtn" type="button"
-                        class="text-white w-36  -skew-x-12 bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-800 focus:bg-purple-950 font-medium  text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                        Cek ID</button>
-                </div> --}}
-
+                <p class="text-xs font-normal italic text-justify">{{ $alertPlayer }}</->
+                    @error('id_player')
+                        <x-input-error :messages="$message" class="mt-2 justify-center" />
+                    @enderror
             </div>
 
         </div>

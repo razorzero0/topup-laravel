@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('status')->default(0);
             $table->bigInteger('image')->unsigned()->nullable();
             $table->foreign('image')->references('id')->on('files')->onDelete('set null');;
-            $table->string('stock');
+            $table->integer('stock');
             $table->timestamps();
         });
     }

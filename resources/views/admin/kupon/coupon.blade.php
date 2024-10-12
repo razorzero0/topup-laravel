@@ -59,7 +59,7 @@
                     </div>
                 @endif
                 <div class="text-center ">
-                    <h4 class="text-2xl font-bold">Daftar Kaupon</h4>
+                    <h4 class="text-2xl font-bold">Daftar Kupon</h4>
                 </div>
                 <div class="flex justify-end mt-5">
                     <button type="button" data-modal-target="add-coupon" data-modal-toggle="add-coupon"

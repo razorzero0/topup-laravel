@@ -35,7 +35,8 @@ class DigiflazzService
             'customer_no' => $customerNo,  // Nomor pelanggan
             'ref_id' => $refId,  // ID unik untuk transaksi
             'sign' => $sign,  // Signature untuk verifikasi transaksi
-            'testing' => true,  // Signature untuk verifikasi transaksi
+            // 'testing' => true
+            // Signature untuk verifikasi transaksi
         ];
         try {
             // Mengirim request POST ke API Digiflazz
