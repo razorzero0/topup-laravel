@@ -7,7 +7,7 @@
                     <img src="{{ asset('assets/img/logo/logo-color.png') }}" class="h-8 me-3" alt="FlowBite Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-gray-100">Algoora</span>
                 </a>
-                <div class="md:w-[80%] text-justify text-slate-200 mt-2">
+                <div class="md:w-[80%] text-xs sm:text-sm text-justify text-slate-200 mt-2">
                     <p>Algoora adalah toko digital terpercaya yang menyediakan berbagai jenis top-up diamond untuk
                         game populer seperti Mobile Legends, Free Fire, Honor of Kings, dan lainnya. Dengan layanan
                         cepat dan aman, Algoora memastikan kebutuhan top-up Anda terpenuhi dengan mudah dan
@@ -42,6 +42,10 @@
                     <ul class="text-gray-500 dark:text-gray-400 font-medium">
                         <li class="mb-4">
                             <a href="{{ route('about') }}" wire:navigate class="hover:underline">About Us</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="{{ route('terms-conditions') }}" wire:navigate class="hover:underline">Terms &
+                                Conditions</a>
                         </li>
                         <li>
                             <a href="{{ route('feedback') }}" wire:navigate class="hover:underline">Feedback</a>

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('return_url')->nullable(); // URL untuk mengalihkan pelanggan setelah pembayaran
             $table->string('status'); // Batas waktu pembayaran dalam format unix timestamp
             $table->integer('expired_time')->nullable(); // Batas waktu pembayaran dalam format unix timestamp
-            $table->string('pay_url')->nullable(); // Batas waktu pembayaran dalam format unix timestamp
+            $table->longText('pay_url')->nullable(); // Batas waktu pembayaran dalam format unix timestamp
             $table->string('checkout_url')->nullable(); // Batas waktu pembayaran dalam format unix timestamp
             $table->json('instructions')->nullable();
             $table->string('qr_url')->nullable();

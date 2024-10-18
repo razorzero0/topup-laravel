@@ -51,13 +51,21 @@
                             <div class="grid grid-cols-2 gap-2 pt-4 lg:grid-cols-3">
                                 @foreach ($channel as $data)
                                     @php
-                                        $feeItem = $fee->where('group', $data['group'])->first();
-                                        $feePlusPrice = isset($feeItem['fee'])
-                                            ? $itemPrice + $feeItem['fee']
-                                            : $itemPrice;
+                                        // $feeItem = $fee->where('group', $data['group'])->first();
+                                        // $feePlusPrice = isset($feeItem['fee'])
+                                        //     ? $itemPrice + $feeItem['fee']
+                                        //     : $itemPrice;
+                                        $fee =
+                                            $data['total_fee']['flat'] +
+                                            ($itemPrice * $data['total_fee']['percent']) / 100;
+
+                                        if ($fee < 1000 && !$data['total_fee']['flat']) {
+                                            $fee = 1000;
+                                        }
+                                        $feePlusPrice = $itemPrice + $fee;
                                     @endphp
                                     <button
-                                        @if ($itemPrice >= $data['minimum_amount']) @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $feePlusPrice }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" @endif
+                                        @if ($feePlusPrice >= $data['minimum_amount'] && $itemCode) @click="activeButton = '{{ $data['code'] }}'; $wire.addPay({{ $feePlusPrice }}, '{{ $data['name'] }}', '{{ $data['code'] }}','{{ $data['group'] }}')" @endif
                                         :class="{ 'paymentActive': activeButton === '{{ $data['code'] }}' }"
                                         class="h-24 p-2 border sm:h-28 rounded-xl bg-slate-700 text-slate-200 border-slate-600 hover:bg-slate-500">
                                         <div class="flex justify-between pb-2 border-b">
@@ -66,7 +74,7 @@
                                             <span
                                                 class="text-xs payment-price sm:text-md font-extralight sm:font-medium">
 
-                                                @if ($itemPrice >= $data['minimum_amount'])
+                                                @if ($feePlusPrice >= $data['minimum_amount'] && $itemCode)
                                                     Rp {{ number_format($feePlusPrice, 0, ',', '.') }}
                                                 @else
                                                     <span class="text-xs text-red-500 ">Min. Rp

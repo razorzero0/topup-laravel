@@ -14,12 +14,22 @@ class TripayService
 
     public function __construct()
     {
-        $this->apiKey = env('TRIPAY_API_KEY');
-        $this->privateKey = env('TRIPAY_PRIVATE_KEY');
-        $this->merchantCode = env('TRIPAY_MERCHANT_CODE');
-        $this->client = new Client([
-            'base_uri' => 'https://tripay.co.id/api-sandbox/', // Ganti saat production
-        ]);
+        if (env('APP_ENV') == "production") {
+
+            $this->apiKey = env('TRIPAY_API_KEY');
+            $this->privateKey = env('TRIPAY_PRIVATE_KEY');
+            $this->merchantCode = env('TRIPAY_MERCHANT_CODE');
+            $this->client = new Client([
+                'base_uri' => 'https://tripay.co.id/api/', // Ganti saat production
+            ]);
+        } else {
+            $this->apiKey = env('DEV_TRIPAY_API_KEY');
+            $this->privateKey = env('DEV_TRIPAY_PRIVATE_KEY');
+            $this->merchantCode = env('DEV_TRIPAY_MERCHANT_CODE');
+            $this->client = new Client([
+                'base_uri' => 'https://tripay.co.id/api-sandbox/', // Ganti saat production
+            ]);
+        }
     }
 
     /**

@@ -35,7 +35,7 @@
 
         <!-- Main Content-->
         <div class="p-8 bg-white border-2 rounded-lg ">
-            <div class="bg-white rounded ">
+            <div class="overflow-x-hidden bg-white rounded">
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
                         <div class="p-4 mb-1 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -59,11 +59,11 @@
                     </div>
                 @endif
                 <div class="text-center ">
-                    <h4 class="text-2xl text-gray-700 font-bold">Daftar Item {{ $name }}</h4>
+                    <h4 class="text-2xl font-bold text-gray-700">Daftar Item {{ $name }}</h4>
                 </div>
-                <div class="flex justify-between mt-5">
+                <div class="flex flex-wrap justify-between mt-5">
                     <a href={{ route('product.index') }} type="button"
-                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Daftar
+                        class="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Daftar
                         Produk</a>
                     <a href={{ route('list-item', request()->segment(2)) }} type="button"
                         class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800  focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 cursor-pointer">Tambah
@@ -76,7 +76,26 @@
                     <span>Rp. {{ number_format($harga) }}</span>
 
                 </div>
-                <table id="default-table">
+                <div class="flex flex-wrap justify-between ">
+                    <form method="post" action="{{ route('disable-all-item') }}">
+                        @csrf
+                        <input value="{{ $id_product }}" name="id" class="hidden" />
+                        <button type="submit"
+                            onclick="return confirm(
+                                            'Apakah Anda yakin ingin melanjutkan?')"
+                            class="focus:outline-none text-white bg-orange-700 hover:bg-orange-800  focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-900 cursor-pointer">Nonaktifkan
+                            Semua Item</button>
+                    </form>
+                    <form method="post" action="{{ route('enable-all-item') }}">
+                        @csrf
+                        <input value="{{ $id_product }}" name="id" class="hidden" />
+                        <button type="submit"
+                            class="focus:outline-none text-white bg-green-700 hover:bg-green-800  focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900 cursor-pointer">Aktifkan
+                            Semua Item</button>
+                    </form>
+                </div>
+
+                <table id="default-table" class="w-full ">
                     <thead>
 
                         <tr>
@@ -185,16 +204,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <label class="inline-flex items-center me-5 cursor-pointer">
-                                        <input disabled type="checkbox" name="status" value="1"
-                                            class="sr-only peer" @if ($item['status']) checked @endif>
-                                        <div
-                                            class="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600">
-                                        </div>
-                                        <span
-                                            class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Aktif</span>
-                                    </label>
 
+                                    <span class="  {{ $item['status'] ? 'text-green-500' : 'text-red-500' }}">
+                                        {{ $item['status'] ? 'Aktif' : 'Tidak Aktif' }}</span>
                                 </td>
                                 <td class="flex gap-1">
 
@@ -244,6 +256,3 @@
         </div>
     </div>
 @endsection
-@push('alerts')
-    <script></script>
-@endpush

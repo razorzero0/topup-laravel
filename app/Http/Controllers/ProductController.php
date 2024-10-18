@@ -14,27 +14,37 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
 
-    protected $digiflazzService, $tripayService;
+    protected $digiflazzService, $tripayService, $a;
 
 
-    public function __construct(DigiflazzService $digiflazzService, TripayService $tripayService)
+    public function __construct(DigiflazzService $digiflazzService)
     {
+        //     $category = Category::all()->pluck('name');
 
+        //     // Mengambil semua 'name' dari tabel 'category'
+        //     $a = $category;
 
         $this->digiflazzService = $digiflazzService->PriceList();
-        $this->tripayService = $tripayService;
+        //     $this->tripayService = $tripayService;
     }
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
 
         $data =  Product::latest()->get();
-        $category = Category::all();
         $harga = Item::sum('total_price');
+        $category = Category::all();
+        $pluck = $category->pluck('name');
+        $digiflazz = new DigiflazzService;
+        $digiflazz = $digiflazz->PriceList()->whereIn('category', $pluck)->unique('brand');
 
-        return view('admin.produk.produk', ['data' => $data, 'category' => $category, 'harga' => $harga]);
+        // Filter data dari digiflazzService berdasarkan 'brand' yang sesuai dengan kategori 'name'
+        // $filteredData = $this->digiflazzService->whereIn('brand', $categoryNames);
+        // dd($digiflazz);
+        return view('admin.produk.produk', ['data' => $data, 'category' => $category, 'harga' => $harga, 'digiflazz' => $digiflazz]);
     }
     public function filterProduct(Request $request)
     {
@@ -43,9 +53,17 @@ class ProductController extends Controller
 
         // Filter koleksi berdasarkan key 'category' yang sesuai dengan request
         $filteredData = $this->digiflazzService->where('category', $filter);
-        $response = json_decode($filteredData);
-        return $response;
+
+        // Jika hasil filtering sukses
+        if ($filteredData && $filteredData->isNotEmpty()) {
+            $response = json_decode($filteredData);
+            return response()->json($response); // Kirim respons JSON
+        } else {
+            // Jika data kosong atau gagal diambil
+            return response()->json(['message' => 'No data available or data loading failed'], 404);
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -64,7 +82,7 @@ class ProductController extends Controller
 
         $slug = Str::slug($request->name, '-');
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:product,name',
             'description' => 'required',
             'company' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -205,10 +223,12 @@ class ProductController extends Controller
     {
         $data =  Product::findOrFail($id);
         $category = Category::all();
-        $selectedProduct = $this->digiflazzService->where('category', $data->category->name);
-        $product = $selectedProduct->unique('brand');
+        $pluck = $category->pluck('name');
+        $digiflazz = new DigiflazzService;
+        $digiflazz = $digiflazz->PriceList()->whereIn('category', $pluck)->unique('brand');
+        // dd($digiflazz);
 
-        return view('admin.produk.edit-modal', ['product' => $data, 'category' => $category, 'selectProduct' => $product]);
+        return view('admin.produk.edit-modal', ['product' => $data, 'category' => $category, 'selectProduct' => $digiflazz]);
     }
 
 

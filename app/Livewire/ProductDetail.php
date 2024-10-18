@@ -100,11 +100,13 @@ class ProductDetail extends Component
         })
             ->where('status', true)  // Filter item dengan status true
             ->where('stock', '>', 1)  // Filter item dengan stock > 1
+            ->orderBy('price')  // Urutkan berdasarkan harga secara menurun
             ->get();
 
         // Langsung gunakan tripayService di sini untuk mengambil channel pembayaran
 
         $payment = $tripayService->getPaymentChannels();
+        // dd($payment);
 
         // Jika pengambilan sukses, simpan payment data dalam variabel view
         if ($payment['success']) {
@@ -117,7 +119,7 @@ class ProductDetail extends Component
         switch (trim(strtolower($this->category))) {
             case 'games':
                 $this->deskripsiPlayer = "Masukkan ID game :";
-                $this->alertPlayer = "⚠️Harap memasukkan ID game dengan hati-hati. Untuk Mobile Legends, format yang benar adalah ID Pengguna + Zone ID, misal dari 199833623(3716) ubah menjadi 1998336233716 \n dan untuk game lainnya, cukup masukkan ID pengguna saja. Pastikan ID yang dimasukkan sudah benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
+                $this->alertPlayer = "⚠️Harap memasukkan ID/UID game dengan hati-hati. Untuk Mobile Legends, format yang benar adalah ID Pengguna + Zone ID, misal dari 199833623(3716) ubah menjadi 1998336233716 \n dan untuk game lainnya, cukup masukkan ID/UID pengguna saja. Pastikan ID yang dimasukkan sudah benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
                 break;
             case 'pulsa':
                 $this->deskripsiPlayer = "Masukkan Nomer HP :";
@@ -146,10 +148,13 @@ class ProductDetail extends Component
     public function addPay($price, $name, $id)
     {
         // dd($price . $name . $id);
-        $this->total = $price;
         $this->price = $price;
         $this->payName = $name;
         $this->payCode = $id;
+
+        if (!$this->kuponStatus) {
+            $this->total = $price;
+        }
     }
 
     public function cekKupon()
@@ -239,7 +244,7 @@ class ProductDetail extends Component
                 }
             } else {
                 // Handle error, display alert
-                $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon periksa input lagi!']);
+                $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon refresh halaman, dan coba lagi!']);
             }
         } else if ($this->total >= 0 && $this->total <= 999) {
 

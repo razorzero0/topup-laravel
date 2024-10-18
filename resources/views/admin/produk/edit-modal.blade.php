@@ -51,7 +51,7 @@
                     class=" max-w-xl sm:max-w-4xl pt-4 mx-auto" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <div>
+                    <div class="hidden">
                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
                             Kategori</label>
                         <select id="selectCategory2"
@@ -68,7 +68,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 hidden">
                         <label for="data" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Sumber
                             Data</label>
                         <select id="selectProduct2"
@@ -85,7 +85,7 @@
 
                         </select>
                     </div>
-                    <div class="mb-5 mt-2">
+                    <div class="mb-5 mt-2 hidden">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama</label>
                         <input type="name" id="edit-product-name"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

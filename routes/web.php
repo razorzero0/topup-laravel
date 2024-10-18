@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\auth\GoogleAuthController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\callback\DigiflazzCallback;
 use App\Http\Controllers\callback\TripayCallback;
@@ -23,7 +23,9 @@ use App\Livewire\Feedback;
 use App\Livewire\Home;
 use App\Livewire\Invoice;
 use App\Livewire\Product;
+use App\Livewire\Product\Information;
 use App\Livewire\ProductDetail;
+use App\Livewire\TermCondition;
 use App\Models\Item;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +51,7 @@ Route::get('/get-product', [ProductController::class, 'getProduct'])->name('get-
 Route::get('/topup/{slug}', ProductDetail::class)->name('product-detail');
 
 Route::get('/invoice/{id}', Invoice::class)->name('invoice');
+Route::get('/terms-conditions', TermCondition::class)->name('terms-conditions');
 
 // Route::get('/payment/callback', [Product::class, 'show']);
 Route::post('/tripay/callback', [TripayCallback::class, 'handle']);
@@ -59,13 +62,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('transaction', TransactionController::class);
 });
 Route::middleware('role:admin')->group(function () {
-    Route::resource('transaction', TransactionController::class);
+
+
     Route::resource('users', UsersController::class);
     Route::resource('coupon', CouponController::class);
     Route::resource('product', ProductController::class);
     Route::resource('item', ItemController::class);
+    Route::post('disable-all-item', [ItemController::class, 'disableAllItem'])->name('disable-all-item');
+    Route::post('enable-all-item', [ItemController::class, 'enableAllItem'])->name('enable-all-item');
     Route::get('items/{id}', [ItemController::class, 'getItem'])->name('get-item');
     Route::get('list-items/{id}', [ItemController::class, 'listItem'])->name('list-item');
     Route::resource('category', CategoryController::class);

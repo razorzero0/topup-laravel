@@ -1,18 +1,23 @@
-<section class="py-20 mt-4 sm:mt-6">
+<section class="py-20 mt-4 ">
     <div class="max-w-6xl mx-3 md:mx-10 lg:mx-20 xl:mx-auto">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 lg:gap-8">
-            <ul class="space-y-8">
+            <ul class="space-y-5">
 
+                {{-- @include('livewire.product_partials.information') --}}
+                <livewire:product.information :name="$product['name']" :image="$product['image']" :company="$product['company']" :description="$product['description']" />
                 @include('livewire.product_partials.contact')
                 @include('livewire.product_partials.player')
                 @include('livewire.product_partials.diamonds')
+
                 @include('livewire.product_partials.payment')
                 @include('livewire.product_partials.kupon')
 
             </ul>
 
-            <ul class="space-y-8 sm:block">
-                @include('livewire.product_partials.information')
+            <ul class="space-y-5 sm:block">
+                <livewire:product.information :style="1" :name="$product['name']" :image="$product['image']" :company="$product['company']"
+                    :description="$product['description']" />
+
                 @include('livewire.product_partials.checkout')
             </ul>
 

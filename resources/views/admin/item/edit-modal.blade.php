@@ -27,7 +27,34 @@
                     @csrf
                     @method('PUT')
 
-                    <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                    <h3 class="mb-4 font-semibold text-gray-900 dark:text-white"> Pilih satu Gambar</h3>
+                    <ul
+                        class=" h-40 overflow-y-scroll text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        @php
+                            $no = 1;
+                        @endphp
+                        @foreach ($images as $image)
+                            <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                <div class="flex items-center ps-3 ">
+                                    <input @if ($image['name'] == ($item->file ? $item->file['name'] : '0')) checked @endif
+                                        id="list-radio-license{{ $no }}" type="radio"
+                                        value="{{ $image['id'] }}" name="image"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="list-radio-license{{ $no }}"
+                                        class="me-4 py-3 ms-2 text-sm font-medium  text-gray-900 dark:text-gray-300">
+                                        {{ $image['name'] }} </label>
+                                    <img class="h-8 w-auto " src="{{ asset($image['image']) }}" />
+                                </div>
+                            </li>
+                            @php
+                                $no++;
+                            @endphp
+                        @endforeach
+
+                    </ul>
+
+
+                    {{-- <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
                         Satu Gambar</label>
                     <select id="image"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -37,7 +64,7 @@
                                 {{ $image['name'] }} </option>
                         @endforeach
 
-                    </select>
+                    </select> --}}
 
                     <div>
                         <label for="name" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nama

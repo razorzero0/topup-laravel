@@ -1,10 +1,10 @@
   <!-- drawer component -->
   <div id="drawer-navigation"
-      class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-slate-900/95 backdrop-blur-sm w-64 dark:bg-gray-800"
+      class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-slate-900/95 backdrop-blur-sm dark:bg-gray-800"
       tabindex="-1" aria-labelledby="drawer-navigation-label">
-      <div class="flex gap-2 items-center text-slate-200">
+      <div class="flex items-center gap-2 text-slate-200">
           <img src="{{ asset('assets/img/logo/logo-color.png') }}" class="h-9" alt="Algoora Logo">
-          <span class="text-lg  font-bold">Algoora</span>
+          <span class="text-lg font-bold">Algoora</span>
       </div>
       <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation"
           class="text-gray-400 bg-transparent hover:bg-gray-800 hover:text-gray-100 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -33,14 +33,14 @@
               @endauth
 
               <li>
-                  <a href="{{ route('cek-transaksi') }}"
+                  <a href="{{ route('cek-transaksi') }}" wire:navigate
                       class="flex items-center w-full p-2 text-base text-gray-100 transition duration-75 rounded-lg group hover:bg-slate-500 dark:text-white dark:hover:bg-gray-700">
                       <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-white"
                           aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
                           <path
                               d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
                       </svg>
-                      <span class=" ms-3 ">Cek Transaksi</span>
+                      <span class=" ms-3">Cek Transaksi</span>
 
                   </a>
 
@@ -59,7 +59,7 @@
                       </a>
                   </li>
                   <li>
-                      <a href={{ route('register') }})
+                      <a href="{{ route('register') }}"
                           class="flex items-center p-2 text-gray-100 rounded-lg dark:text-white hover:bg-slate-500 dark:hover:bg-gray-700 group">
                           <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                               aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

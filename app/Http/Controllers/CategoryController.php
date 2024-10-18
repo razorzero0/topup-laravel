@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
 
 
-        $this->digiflazzService = $digiflazzService;
+        $this->digiflazzService = $digiflazzService->PriceList();
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function index()
     {
         $data =  Category::all();
-        $digiflazz = $this->digiflazzService->PriceList();
+        $digiflazz = $this->digiflazzService->unique('category');
         // dd($digiflazz);
 
 

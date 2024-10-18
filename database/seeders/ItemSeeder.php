@@ -29,7 +29,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'item_name' => '5 Diamond',
+                'item_name' => 'Mobile Legends 5 Diamond',
                 'product_id' => 1,
                 'price' => 1399,
                 'total_price' => 8394,
@@ -42,7 +42,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'item_name' => '12 Diamond',
+                'item_name' => 'Mobile Legends 12 Diamond',
                 'product_id' => 1,
                 'price' => 3675,
                 'total_price' => 11025,
@@ -55,7 +55,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'item_name' => '36 Diamond',
+                'item_name' => 'Mobile Legends 36 Diamond',
                 'product_id' => 1,
                 'price' => 9465,
                 'total_price' => 18930,
@@ -81,7 +81,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'item_name' => '112 Diamond',
+                'item_name' => 'Mobile Legends 112 Diamond',
                 'product_id' => 1,
                 'price' => 29430,
                 'total_price' => 58860,
@@ -107,7 +107,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'item_name' => '12 Diamond',
+                'item_name' => 'Free Fire 12 Diamond',
                 'product_id' => 2,
                 'price' => 1915,
                 'total_price' => 5745,
@@ -120,7 +120,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'item_name' => '50 Diamond',
+                'item_name' => 'Free Fire 50 Diamond',
                 'product_id' => 2,
                 'price' => 7417,
                 'total_price' => 22251,
@@ -133,7 +133,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'item_name' => '140 Diamond',
+                'item_name' => 'Free Fire 140 Diamond',
                 'product_id' => 2,
                 'price' => 18395,
                 'total_price' => 36790,
@@ -146,7 +146,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 11,
-                'item_name' => '280 Diamond',
+                'item_name' => 'Free Fire 280 Diamond',
                 'product_id' => 2,
                 'price' => 36167,
                 'total_price' => 72334,
@@ -159,7 +159,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 12,
-                'item_name' => '355 Diamond',
+                'item_name' => 'Free Fire 355 Diamond',
                 'product_id' => 2,
                 'price' => 45775,
                 'total_price' => 91550,
@@ -172,7 +172,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 13,
-                'item_name' => '16 Tokens',
+                'item_name' => 'Honor of Kings 16 Tokens',
                 'product_id' => 3,
                 'price' => 2430,
                 'total_price' => 12150,
@@ -185,7 +185,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 14,
-                'item_name' => '25 Tokens',
+                'item_name' => 'Honor of Kings 25 Tokens',
                 'product_id' => 3,
                 'price' => 4651,
                 'total_price' => 18604,
@@ -198,7 +198,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 15,
-                'item_name' => '80 Tokens',
+                'item_name' => 'Honor of Kings 80 Tokens',
                 'product_id' => 3,
                 'price' => 10813,
                 'total_price' => 21626,
@@ -211,7 +211,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 16,
-                'item_name' => '240 Tokens',
+                'item_name' => 'Honor of Kings 240 Tokens',
                 'product_id' => 3,
                 'price' => 34480,
                 'total_price' => 68960,

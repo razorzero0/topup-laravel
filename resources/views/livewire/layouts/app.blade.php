@@ -49,7 +49,7 @@
 
 </head>
 
-<body x-init="initFlowbite();" class=" bg-gray-900">
+<body x-init="initFlowbite();" class="bg-gray-900 ">
 
     @include('livewire.layouts.home-navbar')
     {{ $slot }} <!-- Ini akan menampilkan konten dari Livewire component -->
@@ -57,16 +57,8 @@
 
 
 
-    @include('livewire/layouts/footer')
-    {{-- <script>
-        window.onerror = function(msg, url, line, col, error) {
-            // Catch the error and do whatever is necessary
-            return true; // Prevent the original error message from appearing in the console
-        };
-    </script> --}}
-    @livewireScripts
-
     @stack('scripts')
+    @include('livewire.layouts.footer')
 
     @if (env('APP_VERSION') === 'beta')
         <script src="{{ asset('assets/js/ribbon-corner.js') }}"></script>

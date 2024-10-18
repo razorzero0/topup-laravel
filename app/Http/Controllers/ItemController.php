@@ -19,6 +19,7 @@ class ItemController extends Controller
 
     public function __construct(DigiflazzService $digiflazzService)
     {
+
         $this->digiflazzService = $digiflazzService->PriceList();
     }
     /**
@@ -39,7 +40,7 @@ class ItemController extends Controller
         // dd($name['name']);
         // Kirim data ke view dengan key 'data'
         $harga = Item::where('product_id', $id)->sum('total_price');
-        return view('admin.item.item', ['data' => $data, 'harga' => $harga, 'name' => $name, 'images' => $image]);
+        return view('admin.item.item', ['data' => $data, 'harga' => $harga, 'name' => $name, 'images' => $image, 'id_product' => $id]);
     }
     public function listItem(string $id)
     {
@@ -157,6 +158,28 @@ class ItemController extends Controller
         return back()->with('error', 'Edit Gagal!');
     }
 
+    public function disableAllItem(Request $request)
+    {
+
+
+        $data = Item::where('status', 1)->where('product_id', $request->id)->update(['status' => 0]);
+
+        if ($data) {
+            return back()->with('success', 'Disable Semua Item Berhasil!');
+        }
+        return back()->with('error', 'Disable Semua Item Gagal!');
+    }
+    public function enableAllItem(Request $request)
+    {
+
+
+        $data = Item::where('status', 0)->where('product_id', $request->id)->update(['status' => 1]);
+
+        if ($data) {
+            return back()->with('success', 'Enable Semua Item Berhasil!');
+        }
+        return back()->with('error', 'Enable Semua Item Gagal!');
+    }
     /**
      * Remove the specified resource from storage.
      */

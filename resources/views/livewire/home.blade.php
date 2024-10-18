@@ -1,11 +1,11 @@
-<div class="p-20 px-2 mt-4 sm:px-20">
+<div class="p-20 px-2 sm:mt-4 sm:px-20">
     <div class="">
         @include('livewire.home_partials.home-caraousel')
     </div>
     <div class="my-10 text-center mb-14 sm:mb-16">
         <h3 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-white md:text-3xl lg:text-4xl">🔥
             Popular <span
-                class="underline underline-offset-3 decoration-8  decoration-red-500 dark:decoration-blue-600">Items</span>
+                class="underline underline-offset-3 decoration-8 decoration-red-500 dark:decoration-blue-600">Items</span>
         </h3>
 
     </div>
@@ -81,4 +81,20 @@
             }
         });
     </script>
+    @if (env('TAWK_STATUS'))
+        <script type="text/javascript">
+            //TAWK INIT
+            var Tawk_API = Tawk_API || {},
+                Tawk_LoadStart = new Date();
+            (function() {
+                var s1 = document.createElement("script"),
+                    s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/{{ env('TAWK_KEY') }}';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+    @endif
 @endpush
