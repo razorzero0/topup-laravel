@@ -39,7 +39,7 @@ class DigiflazzCallback extends Controller
             if ($data['status'] == "Sukses") {
                 $item->decrement('stock');
             }
-            $this->whatsappService->validasiMessage($trx->ref_id, $this->no, $trx->price, $data['status'], $trx->buyer_sku_code);
+            $this->whatsappService->validasiMessage($trx->ref_id, $this->no, $trx->price, $data['status'], $trx->buyer_sku_code, $data['sn']);
         }
     }
 }

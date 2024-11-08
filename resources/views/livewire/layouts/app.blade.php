@@ -59,7 +59,6 @@
 
     @stack('scripts')
     @include('livewire.layouts.footer')
-
     @if (env('APP_VERSION') === 'beta')
         <script src="{{ asset('assets/js/ribbon-corner.js') }}"></script>
         <script>

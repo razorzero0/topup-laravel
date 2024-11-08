@@ -50,7 +50,7 @@ class WhatsappService
         return $response;
     }
 
-    public function validasiMessage($id, $target, $price, $status, $code)
+    public function validasiMessage($id, $target, $price, $status, $code, $sn)
     {
         // Variabel untuk setiap parameter
         $redirect = 'https://fonnte.com';
@@ -71,6 +71,7 @@ class WhatsappService
             "Harga: Rp {$price}\n" .
             "Kode Item:  *{$code}*\n" .
             "Status: *{$status}*\n" .
+            "Ket.: {$sn} WIB \n\n" .
             "Tanggal: {$formattedDateTime} WIB \n\n";
 
         // Encode parameter message

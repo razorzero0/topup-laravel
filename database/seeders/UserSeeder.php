@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Category;
-use App\Models\Coupon;
-use App\Models\Invoice;
+
 use App\Models\User;
 
 use Spatie\Permission\Models\Role;
@@ -37,7 +34,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'muhainun059@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('0601012000'),
             'remember_token' => Str::random(10),
         ]);
 
@@ -45,7 +42,7 @@ class UserSeeder extends Seeder
             'name' => 'user',
             'email' => 'muhainun058@gmail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('Muhainun058'),
             'remember_token' => Str::random(10),
         ]);
 

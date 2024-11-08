@@ -82,7 +82,7 @@ class ProductController extends Controller
 
         $slug = Str::slug($request->name, '-');
         $request->validate([
-            'name' => 'required|unique:product,name',
+            'name' => 'required|unique:products,name',
             'description' => 'required',
             'company' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',

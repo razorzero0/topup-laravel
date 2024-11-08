@@ -125,6 +125,10 @@ class ProductDetail extends Component
                 $this->deskripsiPlayer = "Masukkan Nomer HP :";
                 $this->alertPlayer = "⚠️ Mohon pastikan nomor handphone yang Anda masukkan benar, ya. Kami tidak bertanggung jawab atas kesalahan input nomor, dan jika nomor yang dimasukkan keliru, pulsa atau paket data bisa terkirim ke nomor yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
                 break;
+            case 'e-money':
+                $this->deskripsiPlayer = "Masukkan Nomer Tujuan/HP :";
+                $this->alertPlayer = "⚠️ Mohon pastikan nomor tujuan/hp sesuai pada akun E-Wallet anda. Kami tidak bertanggung jawab atas kesalahan input tujuan, dan jika nomor yang dimasukkan keliru, saldo bisa terkirim ke wallet yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
+                break;
             default:
                 // Penanganan jika category tidak dikenali
                 $this->deskripsiPlayer = "Masukkan ID/No tujuan";
@@ -162,12 +166,13 @@ class ProductDetail extends Component
         $coupon = Coupon::where('name', $this->kodeKupon)->first();
 
         if ($coupon && $coupon->stock > 0 && $this->itemId == $coupon->item_id && $this->total > 0) {
-            $discount = $this->total * $coupon->percent / 100;
+            $discount = floor($this->total * $coupon->percent / 100); // Membulatkan ke bawah
             $coupon->decrement('stock');
             $priceAfterDiscount = $this->total - $discount;
             $this->diskonKupon = $coupon->percent;
             $this->total = $priceAfterDiscount;
             $this->kuponStatus = 1;
+
 
             // Dispatch event untuk notifikasi sukses
             $this->dispatch('alert', ['type' => 'success', 'message' => 'Kupon valid dan stock tersedia!']);
@@ -200,6 +205,8 @@ class ProductDetail extends Component
     {
 
         if ($this->total >= 1000) {
+
+            // dd($method, $merchantRef, $amount, $customerDetails, $orderItems);
             $tripay = $tripayService->makeTransaction($method, $merchantRef, $amount, $customerDetails, $orderItems);
             if ($tripay['success']) {
                 // Create the invoice
@@ -229,6 +236,7 @@ class ProductDetail extends Component
                     'ref_id' => $merchantRef,
                     'kode_pengguna' => $this->user_id,
                     'customer_no' => $this->id_player,
+                    'item_name' => $this->itemName,
                     'customer_phone' => $this->phone,
                     'buyer_sku_code' => $this->itemCode,
                     'status' => 'Created',
@@ -261,6 +269,7 @@ class ProductDetail extends Component
                             'ref_id' => $merchantRef,
                             'kode_pengguna' => $this->user_id,
                             'customer_no' => $this->id_player,
+                            'item_name' => $this->itemName,
                             'customer_phone' => $this->phone,
                             'buyer_sku_code' => $this->itemCode,
                             'status' => 'Pending',
@@ -271,7 +280,9 @@ class ProductDetail extends Component
 
 
                         $this->kuponStatus = 0;
-                        $this->dispatch('alert', ['type' => 'success', 'message' => 'Transaksi berhasil silahkan tunggu item masuk ke akun anda!']);
+                        return $this->redirect(route('discount-status',  $merchantRef), navigate: true);
+
+                        // $this->dispatch('alert', ['type' => 'success', 'message' => 'Transaksi berhasil! silahkan tunggu item masuk ke akun anda!']);
                     } else {
                         $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
                     }
@@ -292,7 +303,7 @@ class ProductDetail extends Component
         // $trx = Transaction::where('ref_id', 'ALG751890681001')->first();
 
         // $tes = $whatsappService->validasiMessage($trx->invoice_id, env('APP_NO'), $trx->price, $trx['status']);
-        // dd($tes);
+        // dd($amount);
 
         $this->validate();
 
@@ -301,7 +312,7 @@ class ProductDetail extends Component
 
         $method = $this->payCode;
         $merchantRef = 'ALG' . $random;
-        $amount = $this->total;
+        $amount = floor($this->total);
         $customerDetails = [
             'name' => 'user' . $random,  // Ganti dengan nama produk yang diinginkan
             'email' => $this->email,          // Ganti dengan harga produk
@@ -334,7 +345,7 @@ class ProductDetail extends Component
 
         $cekStock = Item::where('buyer_sku_code', $this->itemCode)->first();
         // dd($cekStock['stock']);
-        if ($cekStock['stock'] > 1) {
+        if ($cekStock['stock'] > 0) {
             if ($stmt) {
                 $this->start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService);
             } else {

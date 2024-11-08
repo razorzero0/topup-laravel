@@ -17,8 +17,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UsersController;
+use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Livewire\About;
 use App\Livewire\CekTransaksi;
+use App\Livewire\DiscountStatus;
 use App\Livewire\Feedback;
 use App\Livewire\Home;
 use App\Livewire\Invoice;
@@ -51,13 +53,14 @@ Route::get('/get-product', [ProductController::class, 'getProduct'])->name('get-
 Route::get('/topup/{slug}', ProductDetail::class)->name('product-detail');
 
 Route::get('/invoice/{id}', Invoice::class)->name('invoice');
+Route::get('/discount-status/{id}', DiscountStatus::class)->name('discount-status');
 Route::get('/terms-conditions', TermCondition::class)->name('terms-conditions');
 
 // Route::get('/payment/callback', [Product::class, 'show']);
 Route::post('/tripay/callback', [TripayCallback::class, 'handle']);
 Route::post('/digiflazz/callback', [DigiflazzCallback::class, 'handle']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', EnsureEmailIsVerified::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

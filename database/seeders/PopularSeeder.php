@@ -32,12 +32,7 @@ class PopularSeeder extends Seeder
                 'created_at' => '2024-10-12 07:05:48',
                 'updated_at' => '2024-10-12 07:05:48',
             ],
-            [
-                'id' => 4,
-                'product_id' => 4,
-                'created_at' => '2024-10-12 07:25:55',
-                'updated_at' => '2024-10-12 07:25:55',
-            ],
+
         ]);
     }
 }

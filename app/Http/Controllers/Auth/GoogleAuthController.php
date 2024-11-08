@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -22,13 +22,21 @@ class GoogleAuthController extends Controller
         $googleUser = Socialite::driver('google')->stateless()->user();
         $user = User::where('email', $googleUser->email)->first();
         if (!$user) {
-
-            $user = User::create(['name' => $googleUser->name, 'email' => $googleUser->email, 'password' =>   Hash::make(rand(100000, 999999))]);
-            $user->assignRole('user');
+            // Jika user belum ada, buat user baru
+            $user = User::create([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => bcrypt(str_random(16)), // Password random
+                'email_verified_at' => now(), // Otomatis verifikasi email
+            ]);
+        } elseif (!$user->hasVerifiedEmail()) {
+            // Verifikasi email jika belum diverifikasi
+            $user->email_verified_at = now();
+            $user->save();
         }
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 }

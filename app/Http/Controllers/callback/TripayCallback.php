@@ -126,7 +126,6 @@ class TripayCallback extends Controller
                     // Send Whatsapp
                     $this->whatsappService->sendMessage($invoiceId, $findInvoice->customer_name, $findInvoice->customer_phone, $findInvoice->amount, $itemName[0]['name'], $status);
 
-
                     //Send Email
                     $from = [
                         'email' => env('MAILTRAP_EMAIL'),

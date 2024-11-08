@@ -105,6 +105,34 @@ class FileSeeder extends Seeder
                 'created_at' => '2024-10-12 11:34:56',
                 'updated_at' => '2024-10-12 11:34:56',
             ],
+            [
+                'id' => 15,
+                'name' => 'dana',
+                'image' => 'images/1729356415.jpg',
+                'created_at' => '2024-10-19 16:46:55',
+                'updated_at' => '2024-10-19 16:46:55'
+            ],
+            [
+                'id' => 16,
+                'name' => 'ovo',
+                'image' => 'images/1729356427.jpg',
+                'created_at' => '2024-10-19 16:47:07',
+                'updated_at' => '2024-10-19 16:47:07'
+            ],
+            [
+                'id' => 17,
+                'name' => 'grab',
+                'image' => 'images/1729356441.png',
+                'created_at' => '2024-10-19 16:47:21',
+                'updated_at' => '2024-10-19 16:47:21'
+            ],
+            [
+                'id' => 18,
+                'name' => 'shopeepay',
+                'image' => 'images/1729356470.png',
+                'created_at' => '2024-10-19 16:47:50',
+                'updated_at' => '2024-10-19 16:47:50'
+            ],
         ]);
     }
 }

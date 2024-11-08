@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('invoice_id')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('set null');
             $table->string('customer_no');
+            $table->string('item_name')->default("")->nullable();
             $table->string('customer_phone')->nullable();
             $table->string('ref_id')->nullable();
             $table->string('buyer_sku_code');

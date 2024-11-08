@@ -8,14 +8,14 @@
         </div>
         <div class="relative p-6 space-y-6 leading-none rounded-lg bg-slate-800 ring-1 ring-gray-900/5">
             <div class="flex items-center space-x-4">
-                <img src="{{ asset($image ?? '') }}" class="w-16 h-16 bg-center bg-cover border rounded-md -skew-x-6"
+                <img src="{{ asset($image ?? '') }}" class="w-16 h-16 -skew-x-6 bg-center bg-cover border rounded-md"
                     alt="logo">
                 <div>
                     <h3 class="text-lg font-semibold text-white">{{ $name ?? '' }}</h3>
                     <p class="text-gray-500 text-md">{{ $company ?? '' }}</p>
                 </div>
             </div>
-            <div class="text-slate-300 leading-normal ps-2 text-md information">
+            <div class="leading-normal text-slate-300 ps-2 text-md information">
 
                 {!! $description ?? '' !!}
             </div>

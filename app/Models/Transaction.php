@@ -15,6 +15,7 @@ class Transaction extends Model
         'invoice_id',
         'ref_id',
         'customer_no',
+        'item_name',
         'customer_phone',
         'buyer_sku_code',
         'status',
