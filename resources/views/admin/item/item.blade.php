@@ -119,6 +119,16 @@
                                     </svg>
                                 </span>
                             </th>
+                            <th>
+                                <span class="flex items-center">
+                                    KP
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
 
                             <th data-type="date" data-format="YYYY/DD/MM">
                                 <span class="flex items-center">
@@ -130,7 +140,7 @@
                                     </svg>
                                 </span>
                             </th>
-                            <th>
+                            {{-- <th>
                                 <span class="flex items-center">
                                     Total Harga
                                     <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +149,7 @@
                                             stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
                                     </svg>
                                 </span>
-                            </th>
+                            </th> --}}
 
                             <th>
                                 <span class="flex items-center">
@@ -188,13 +198,14 @@
                             <tr>
                                 <td class="font-medium text-gray-900 whitespace-nowrap">{{ $no++ }}</td>
                                 <td> {{ $item['item_name'] }} </td>
+                                <td> {{ $item['buyer_sku_code'] }} </td>
 
                                 <td>
                                     Rp. {{ number_format($item['price']) }}
                                 </td>
-                                <td>
+                                {{-- <td>
                                     Rp. {{ number_format($item['total_price']) }}
-                                </td>
+                                </td> --}}
                                 <td>
                                     {{ $item['stock'] }} </td>
 
@@ -239,6 +250,159 @@
                                             </svg>
 
                                         </button>
+                                    </form>
+                                </td>
+
+
+                            </tr>
+                        @endforeach
+
+
+                    </tbody>
+                </table>
+
+
+            </div>
+
+        </div>
+
+        <!-- Main Content-->
+        <div class="p-2 mt-4 bg-white border-2 rounded-lg sm:p-12 ">
+            <div class="bg-white rounded ">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="p-4 mb-1 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                            role="alert">
+                            <span class="font-medium">{{ $error }}</span>
+                        </div>
+                    @endforeach
+                @endif
+                @if (session('success'))
+                    <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                        role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div>
+                            <span class="font-medium">{{ session('success') }}</span>
+                        </div>
+                    </div>
+                @endif
+                <div class="text-center ">
+                    <h4 class="text-2xl font-bold text-gray-700">Tambah Item</h4>
+                </div>
+                <div class="flex justify-end mt-5">
+
+                    <button type="button" onclick="location.reload()"
+                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Reload
+                        Item</button>
+
+                </div>
+                <hr class="h-px my-5 bg-gray-200 border-0">
+
+                <table id="add-item-table">
+                    <thead>
+
+                        <tr>
+                            <th class="w-2 border">
+                                <span class="flex items-center">
+                                    NO
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th>
+                                <span class="flex items-center">
+                                    Nama
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th>
+                                <span class="flex items-center">
+                                    Sku code
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th data-type="date" data-format="YYYY/DD/MM">
+                                <span class="flex items-center">
+                                    Produk
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+                            <th data-type="date" data-format="YYYY/DD/MM">
+                                <span class="flex items-center">
+                                    Harga
+                                    <svg class="w-4 h-4 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m8 15 4 4 4-4m0-6-4-4-4 4" />
+                                    </svg>
+                                </span>
+                            </th>
+
+
+                            <th>
+                                <span class="flex items-center">
+                                    Aksi
+                                </span>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @php
+                            $no = 1;
+                        @endphp
+                        @foreach ($digiData as $item)
+                            <tr>
+                                <td class="font-medium text-gray-900 whitespace-nowrap">{{ $no++ }}</td>
+                                <td>{{ $item['product_name'] }}</td>
+                                <td>{{ $item['buyer_sku_code'] }}</td>
+                                <td>{{ $item['brand'] }}</td>
+                                <td class="">Rp. {{ number_format($item['price']) }}</td>
+
+                                <td class="flex gap-1">
+
+                                    <form method="post" action="{{ route('item.store') }}">
+                                        @csrf
+                                        <input class="hidden" name="product_name" value="{{ $item['product_name'] }}" />
+                                        <input class="hidden" name="buyer_sku_code"
+                                            value="{{ $item['buyer_sku_code'] }}" />
+                                        <input class="hidden" name="price" value="{{ $item['price'] }}" />
+                                        <input class="hidden" name="stock" value="{{ $item['stock'] }}" />
+                                        <input class="hidden" name="product_id" value="{{ request()->segment(2) }}" />
+
+                                        <button
+                                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center ">
+                                            <svg class="w-5 h-5 text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
+                                            </svg>
+
+
+                                        </button>
+
                                     </form>
                                 </td>
 

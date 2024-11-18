@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 class ProductDetail extends Component
 {
 
-    public $user_id, $email, $tripayService, $product, $kodeKupon, $diskonKupon, $data, $payment, $price, $itemPrice, $total, $itemId, $itemCode, $itemName, $payName, $payCode, $phone, $id_player, $category;
+    public $user_id, $email, $tripayService, $product, $kodeKupon, $diskonKupon, $data, $payment, $price, $itemPrice, $total, $itemId, $itemCode, $itemName, $payName, $payCode, $phone, $id_player, $zona_id, $category;
 
     public $deskripsiPlayer, $alertPlayer, $fee, $kuponStatus;
     public function rules()
@@ -43,6 +43,7 @@ class ProductDetail extends Component
             'payCode' => 'required|string',
             'phone' => 'required|numeric|min:10',
             'id_player' => 'required',
+            'zona_id' => strtolower($this->product['name'])  ==  'mobile legends' ? 'required' : '',
         ];
     }
 
@@ -79,6 +80,7 @@ class ProductDetail extends Component
             'phone.numeric' => 'Nomor telepon harus berupa angka.',
             'phone.min' => 'Nomor telepon harus memiliki minimal 10 karakter.',
             'id_player.required' => 'ID/Nomor tidak boleh kosong.',
+            'zona_id.required' => 'Zona ID tidak boleh kosong.',
         ];
     }
 
@@ -118,8 +120,8 @@ class ProductDetail extends Component
 
         switch (trim(strtolower($this->category))) {
             case 'games':
-                $this->deskripsiPlayer = "Masukkan ID game :";
-                $this->alertPlayer = "⚠️Harap memasukkan ID/UID game dengan hati-hati. Untuk Mobile Legends, format yang benar adalah ID Pengguna + Zone ID, misal dari 199833623(3716) ubah menjadi 1998336233716 \n dan untuk game lainnya, cukup masukkan ID/UID pengguna saja. Pastikan ID yang dimasukkan sudah benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
+                $this->deskripsiPlayer = "Masukkan ID Pengguna";
+                $this->alertPlayer = "⚠️Harap memasukkan ID/UID game dengan hati-hati dan benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
                 break;
             case 'pulsa':
                 $this->deskripsiPlayer = "Masukkan Nomer HP :";
@@ -201,7 +203,7 @@ class ProductDetail extends Component
 
 
 
-    public function start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService)
+    public function start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService, $id_player)
     {
 
         if ($this->total >= 1000) {
@@ -235,7 +237,7 @@ class ProductDetail extends Component
                     'invoice_id' =>  $tripay['data']['merchant_ref'],
                     'ref_id' => $merchantRef,
                     'kode_pengguna' => $this->user_id,
-                    'customer_no' => $this->id_player,
+                    'customer_no' => $id_player,
                     'item_name' => $this->itemName,
                     'customer_phone' => $this->phone,
                     'buyer_sku_code' => $this->itemCode,
@@ -259,7 +261,7 @@ class ProductDetail extends Component
 
             // dd($hook);
             if ($this->kuponStatus) {
-                $hook = $digiflazzService->makeTransaction($this->id_player, $merchantRef, $this->itemCode);
+                $hook = $digiflazzService->makeTransaction($id_player, $merchantRef, $this->itemCode);
                 if (isset($hook['data']['status'])) {
                     if (
                         strtolower($hook['data']['status']) == 'pending' ||
@@ -268,7 +270,7 @@ class ProductDetail extends Component
                         Transaction::create([
                             'ref_id' => $merchantRef,
                             'kode_pengguna' => $this->user_id,
-                            'customer_no' => $this->id_player,
+                            'customer_no' => $id_player,
                             'item_name' => $this->itemName,
                             'customer_phone' => $this->phone,
                             'buyer_sku_code' => $this->itemCode,
@@ -309,7 +311,7 @@ class ProductDetail extends Component
 
 
         $random = rand(100000000000, 999999999999);
-
+        $id_player = $this->id_player;
         $method = $this->payCode;
         $merchantRef = 'ALG' . $random;
         $amount = floor($this->total);
@@ -333,13 +335,16 @@ class ProductDetail extends Component
         $id = '';
         if (strtolower($cek) == 'ml') {
             $id = 'mlu';
+            $id_player = $this->id_player . $this->zona_id;
         } else if (strtolower($cek) == 'ff') {
             $id = 'ffu';
         }
 
+        // dd($id_player);
+
         $stmt = 1;
         if ($id) {
-            $stmt = $digiflazzService->makeTransaction($this->id_player, $tes, $id);
+            $stmt = $digiflazzService->makeTransaction($id_player, $tes, $id);
             $stmt = isset($stmt['error']) ? 0 : 1;
         }
 
@@ -347,7 +352,7 @@ class ProductDetail extends Component
         // dd($cekStock['stock']);
         if ($cekStock['stock'] > 0) {
             if ($stmt) {
-                $this->start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService);
+                $this->start($method, $merchantRef, $amount, $customerDetails, $orderItems, $tripayService, $digiflazzService, $id_player);
             } else {
                 $this->dispatch('alert', ['type' => 'error', 'message' => 'Mohon maaf, sistem masih terkendala! Mohon coba beberapa saat lagi.']);
             }

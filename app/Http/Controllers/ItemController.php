@@ -35,12 +35,15 @@ class ItemController extends Controller
     public function getItem(string $id)
     {
         $image = File::all();
-        $data =  Item::where('product_id', $id)->get();
+        $data =  Item::where('product_id', $id)->get()->sortBy('price');
         $name = Product::find($id)['name'];
         // dd($name['name']);
         // Kirim data ke view dengan key 'data'
         $harga = Item::where('product_id', $id)->sum('total_price');
-        return view('admin.item.item', ['data' => $data, 'harga' => $harga, 'name' => $name, 'images' => $image, 'id_product' => $id]);
+
+
+        $digiData = $this->digiflazzService->where('brand', $name)->sortBy('price');
+        return view('admin.item.item', ['data' => $data, 'digiData' => $digiData, 'harga' => $harga, 'name' => $name, 'images' => $image, 'id_product' => $id]);
     }
     public function listItem(string $id)
     {
