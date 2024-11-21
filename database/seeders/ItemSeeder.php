@@ -21,7 +21,7 @@ class ItemSeeder extends Seeder
                 'price' => 1000,
                 'total_price' => 10000,
                 'buyer_sku_code' => 'mlu',
-                'status' => 1,
+                'status' => 0,
                 'image' => 14,
                 'stock' => 10,
                 'created_at' => '2024-10-11 15:33:33',
@@ -29,7 +29,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'item_name' => 'Mobile Legends 5 Diamond',
+                'item_name' => 'Mobile Legends 5 Diamonds',
                 'product_id' => 1,
                 'price' => 990,
                 'total_price' => 9900,
@@ -42,7 +42,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'item_name' => 'Mobile Legends 12 Diamond',
+                'item_name' => 'Mobile Legends 12 Diamonds',
                 'product_id' => 1,
                 'price' => 3400,
                 'total_price' => 34000,
@@ -55,7 +55,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'item_name' => 'Mobile Legends 36 Diamond',
+                'item_name' => 'Mobile Legends 36 Diamonds',
                 'product_id' => 1,
                 'price' => 9700,
                 'total_price' => 97000,
@@ -68,7 +68,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'item_name' => 'MOBILE LEGENDS Weekly Diamond Pass',
+                'item_name' => 'Mobile Legends Weekly Diamonds Pass',
                 'product_id' => 1,
                 'price' => 26900,
                 'total_price' => 269000,
@@ -81,7 +81,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'item_name' => 'Mobile Legends 112 Diamond',
+                'item_name' => 'Mobile Legends 112 Diamonds',
                 'product_id' => 1,
                 'price' => 29900,
                 'total_price' => 299000,
@@ -99,7 +99,7 @@ class ItemSeeder extends Seeder
                 'price' => 1000,
                 'total_price' => 10000,
                 'buyer_sku_code' => 'ffu',
-                'status' => 1,
+                'status' => 0,
                 'image' => 14,
                 'stock' => 10,
                 'created_at' => '2024-10-12 11:36:37',
@@ -107,7 +107,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'item_name' => 'Free Fire 12 Diamond',
+                'item_name' => 'Free Fire 12 Diamonds',
                 'product_id' => 2,
                 'price' => 1915,
                 'total_price' => 5745,
@@ -120,7 +120,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'item_name' => 'Free Fire 50 Diamond',
+                'item_name' => 'Free Fire 50 Diamonds',
                 'product_id' => 2,
                 'price' => 7417,
                 'total_price' => 22251,
@@ -133,7 +133,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'item_name' => 'Free Fire 140 Diamond',
+                'item_name' => 'Free Fire 140 Diamonds',
                 'product_id' => 2,
                 'price' => 18395,
                 'total_price' => 36790,
@@ -146,7 +146,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 11,
-                'item_name' => 'Free Fire 280 Diamond',
+                'item_name' => 'Free Fire 280 Diamonds',
                 'product_id' => 2,
                 'price' => 36167,
                 'total_price' => 72334,
@@ -159,7 +159,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 12,
-                'item_name' => 'Free Fire 355 Diamond',
+                'item_name' => 'Free Fire 355 Diamonds',
                 'product_id' => 2,
                 'price' => 45775,
                 'total_price' => 91550,
@@ -497,7 +497,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 45,
-                'item_name' => 'MOBILELEGEND - 296 Diamond',
+                'item_name' => 'MOBILELEGEND - 296 Diamonds',
                 'product_id' => 1,
                 'price' => 76379,
                 'total_price' => 458274,
@@ -510,7 +510,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 46,
-                'item_name' => 'MOBILELEGEND - 355 Diamond',
+                'item_name' => 'MOBILELEGEND - 355 Diamonds',
                 'product_id' => 1,
                 'price' => 91000,
                 'total_price' => 455000,
@@ -523,7 +523,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 47,
-                'item_name' => 'MOBILELEGEND - 408 Diamond',
+                'item_name' => 'MOBILELEGEND - 408 Diamonds',
                 'product_id' => 1,
                 'price' => 103180,
                 'total_price' => 515900,
@@ -536,7 +536,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 49,
-                'item_name' => 'MOBILELEGEND - 716 Diamond',
+                'item_name' => 'MOBILELEGEND - 716 Diamonds',
                 'product_id' => 1,
                 'price' => 178730,
                 'total_price' => 893650,
@@ -549,7 +549,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 50,
-                'item_name' => 'Free Fire 500 Diamond',
+                'item_name' => 'Free Fire 500 Diamonds',
                 'product_id' => 2,
                 'price' => 61600,
                 'total_price' => 308000,
@@ -562,7 +562,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 51,
-                'item_name' => 'Free Fire 635 Diamond',
+                'item_name' => 'Free Fire 635 Diamonds',
                 'product_id' => 2,
                 'price' => 78740,
                 'total_price' => 393700,
@@ -575,7 +575,7 @@ class ItemSeeder extends Seeder
             ],
             [
                 'id' => 52,
-                'item_name' => 'Free Fire 720 Diamond',
+                'item_name' => 'Free Fire 720 Diamonds',
                 'product_id' => 2,
                 'price' => 86852,
                 'total_price' => 347408,

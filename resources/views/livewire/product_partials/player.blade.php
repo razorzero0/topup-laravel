@@ -14,11 +14,11 @@
                     <span>Masukkan Tujuan </span>
                 </p>
             </div>
-            <div class="py-4 px-7">
-                <p class="mb-3">{{ $deskripsiPlayer }}</p>
+            <div class="py-4 px-4">
+                <p class="mb-3">Masukkan {{ $deskripsiPlayer }}</p>
                 @if (strtolower($product['name']) == 'mobile legends')
-                    <div class="flex flex-wrap -mx-2">
-                        <div class="relative w-full px-2 mb-2 md:w-2/3">
+                    <div class="flex flex-wrap ">
+                        <div class="relative  pe-2 mb-2 w-2/3">
                             <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-4">
                                 <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -31,14 +31,14 @@
                                 class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="{{ $deskripsiPlayer }}">
                         </div>
-                        <div class="relative w-full px-2 mb-2 md:w-1/3 ">
-                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-6">
+                        <div class="relative   mb-2 w-1/3 ">
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-1 md:ps-4">
                                 <b class="text-lg font-bold text-slate-800">
                                     {{ '(' }}
                                 </b>
 
                             </div>
-                            <div class="absolute inset-y-0 flex items-center pointer-events-none end-0 pe-6">
+                            <div class="absolute inset-y-0 flex items-center pointer-events-none end-0 pe-1 md:pe-4">
                                 <b class="text-lg font-bold text-slate-800">
                                     {{ ')' }}
                                 </b>

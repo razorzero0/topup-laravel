@@ -120,20 +120,20 @@ class ProductDetail extends Component
 
         switch (trim(strtolower($this->category))) {
             case 'games':
-                $this->deskripsiPlayer = "Masukkan ID Pengguna";
-                $this->alertPlayer = "⚠️Harap memasukkan ID/UID game dengan hati-hati dan benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan dan bukan tanggung jawab kami. Terima kasih atas perhatian dan pengertiannya🙏!";
+                $this->deskripsiPlayer = "ID Pengguna";
+                $this->alertPlayer = "⚠️Harap memasukkan ID/UID game dengan hati-hati dan benar, karena kesalahan input dapat mengakibatkan proses gagal/salah tujuan. Terima kasih atas perhatian dan pengertiannya🙏!";
                 break;
             case 'pulsa':
-                $this->deskripsiPlayer = "Masukkan Nomer HP :";
-                $this->alertPlayer = "⚠️ Mohon pastikan nomor handphone yang Anda masukkan benar, ya. Kami tidak bertanggung jawab atas kesalahan input nomor, dan jika nomor yang dimasukkan keliru, pulsa atau paket data bisa terkirim ke nomor yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
+                $this->deskripsiPlayer = "Nomer HP :";
+                $this->alertPlayer = "⚠️ Mohon pastikan nomor handphone yang Anda masukkan benar, ya. Kesalahan input mengakibatkan pulsa atau paket data bisa terkirim ke nomor yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
                 break;
             case 'e-money':
-                $this->deskripsiPlayer = "Masukkan Nomer Tujuan/HP :";
-                $this->alertPlayer = "⚠️ Mohon pastikan nomor tujuan/hp sesuai pada akun E-Wallet anda. Kami tidak bertanggung jawab atas kesalahan input tujuan, dan jika nomor yang dimasukkan keliru, saldo bisa terkirim ke wallet yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
+                $this->deskripsiPlayer = "Nomer Tujuan/HP :";
+                $this->alertPlayer = "⚠️ Mohon pastikan nomor tujuan/hp sesuai pada akun E-Wallet anda. Jika nomor yang dimasukkan keliru, saldo bisa terkirim ke wallet yang salah. Terima kasih banyak atas perhatian dan pengertiannya 🙏!";
                 break;
             default:
                 // Penanganan jika category tidak dikenali
-                $this->deskripsiPlayer = "Masukkan ID/No tujuan";
+                $this->deskripsiPlayer = "ID/No tujuan";
                 $this->alertPlayer = "⚠️ Harap memasukkan ID/No tujuan dengan benar.";
                 break;
         }
